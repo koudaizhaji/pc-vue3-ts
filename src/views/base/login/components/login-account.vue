@@ -1,0 +1,121 @@
+<template>
+  <div class="login-title">
+    <img class="icon" src="@/assets/imgs/logo.png" alt="logo" />
+    <h2 class="title">管理后台</h2>
+  </div>
+  <!-- 登录面板 -->
+  <div class="pane-account">
+    <el-form ref="formRef" :model="account" lable-width="60px" size="large" :rules="rules">
+      <el-form-item label="" prop="username">
+        <el-input
+          placeholder="请输入用户名"
+          autoComplete="on"
+          style="position: relative"
+          v-model="account.username"
+          @keyup.enter.native="submitForm(formRef)"
+        >
+          <template #prefix>
+            <div class="i-mdi-account-badge-outline font-size-20rpx"></div>
+          </template>
+        </el-input>
+      </el-form-item>
+
+      <el-form-item label="" prop="password">
+        <el-input
+          placeholder="请输入密码"
+          autoComplete="on"
+          @keyup.enter.native="submitForm(formRef)"
+          v-model="account.password"
+          :type="passwordType"
+        >
+          <template #prefix>
+            <div class="i-mdi-alpha-m-circle-outline"></div>
+          </template>
+          <template #suffix>
+            <div class="show-pwd" @click="showPwd">
+              <!-- <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" /> -->
+              <div :class="passwordType === 'password' ? 'i-mdi-eye-off' : 'i-mdi-eye'"></div>
+            </div>
+          </template>
+        </el-input>
+      </el-form-item>
+
+      <el-form-item style="width: 100%">
+        <el-button :loading="loading" class="login-btn" type="primary" @click="submitForm(formRef)"
+          >登录</el-button
+        >
+      </el-form-item>
+    </el-form>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref, reactive } from 'vue'
+import type { FormInstance } from 'element-plus'
+import { ElNotification } from 'element-plus'
+import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/modules/user'
+import { getTimeStateStr } from '@/utils/index'
+import useLoginStore from '@/stores/login/login'
+
+const router = useRouter()
+const UserStore = useUserStore()
+const formRef = ref<FormInstance>()
+const passwordType = ref('password')
+const loading = ref(false)
+const loginStore = useLoginStore()
+
+// step2:输入框验证规则
+const rules = reactive({
+  password: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+  username: [{ required: true, message: '请输入密码', trigger: 'blur' }]
+})
+// step3:执行逻辑
+// 表单数据
+const account = reactive({
+  username: '',
+  password: ''
+})
+
+// 显示密码图标
+const showPwd = () => {
+  passwordType.value = passwordType.value === 'password' ? '' : 'password'
+}
+
+const accountRef = ref<InstanceType<typeof PanelAccount>>()
+// 这里使用ref选中的formRef.value也行
+const submitForm = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  formEl.validate((valid) => {
+    if (valid) {
+      loading.value = true
+
+      console.log('拿到的用户名', account)
+      const { username, password } = account
+      // 1.登录操作
+      loginStore.accountLoginAction({ username, password })
+      // 登录
+      // const res = await login()
+      // setTimeout(async () => {
+      //   await UserStore.login(ruleForm)
+      //   await router.push({
+      //     path: '/'
+      //   })
+      //   ElNotification({
+      //     title: getTimeStateStr(),
+      //     message: '欢迎登录 口袋炸鸡管理后台',
+      //     type: 'success',
+      //     duration: 3000
+      //   })
+      //   loading.value = true
+      // }, 1000)
+    } else {
+      console.log('error submit!')
+      return false
+    }
+  })
+}
+</script>
+
+<style lang="less" scoped>
+@import '../index.less';
+</style>

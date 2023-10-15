@@ -4,10 +4,10 @@
       <div class="wscn-http403-container">
         <div class="wscn-http403">
           <div class="pic-403">
-            <img class="pic-403__parent" src="@/assets/403_imgs/403.png" alt="403" />
-            <img class="pic-403__child left" src="@/assets/403_imgs/403_cloud.png" alt="403" />
-            <img class="pic-403__child mid" src="@/assets/403_imgs/403_cloud.png" alt="403" />
-            <img class="pic-403__child right" src="@/assets/403_imgs/403_cloud.png" alt="403" />
+            <img class="pic-403__parent" src="@/assets/imgs/403/403.png" alt="403" />
+            <img class="pic-403__child left" src="@/assets/imgs/403/403_cloud.png" alt="403" />
+            <img class="pic-403__child mid" src="@/assets/imgs/403/403_cloud.png" alt="403" />
+            <img class="pic-403__child right" src="@/assets/imgs/403/403_cloud.png" alt="403" />
           </div>
           <div class="bullshit">
             <div class="bullshit__oops">您没有访问权限！</div>

@@ -13,6 +13,7 @@ import { accountLogin, getRoleMenus, getUserById } from '@/services/login/login'
 import { localCache } from '@/utils/cache'
 // import { mapMenuToPersssions } from '@/utils/map-menu'
 import { defineStore } from 'pinia'
+import { LOGIN_TOKEN, USER_INFO, USER_MENUS } from '../../config'
 // import useMainStore from '../main/main'
 
 interface ILoginState {
@@ -24,7 +25,7 @@ interface ILoginState {
 
 const useLoginStore = defineStore('login', {
   state: (): ILoginState => ({
-    token: '',
+    token: localCache.getCache(LOGIN_TOKEN) || '',
     userInfo: {},
     userMenus: [],
     permissions: []
@@ -35,32 +36,56 @@ const useLoginStore = defineStore('login', {
       const loginRes = await accountLogin(account)
       const { token } = loginRes
       this.token = token
-      console.log('拿到的信息', loginRes, token)
-      // 2.保存在cache中
-      localCache.setCache('token', token)
-
-      // 3.获取用户信息
-      const userRes = await getUserById()
+      console.log('拿到的信息', loginRes, token, LOGIN_TOKEN)
+      // 判断下如果信息不对，提示登录失败
+      localCache.setCache(LOGIN_TOKEN, this.token)
+      // 2.获取用户信息
+      const userRes = await getUserById(loginRes.id)
       this.userInfo = userRes.data
-      localCache.setCache('useInfo', this.userInfo)
+      console.log('拿到的用户信息', userRes)
+      localCache.setCache(USER_INFO, this.userInfo)
+      // // 判断下如果信息不对，提示登录失败
+      // if (!userRes) {
+      //   return
+      // }
+      // // 3.获取用户菜单
+      const menusRes = await getRoleMenus()
+      this.userMenus = menusRes.data
+      console.log('拿到的用户菜单', this.userMenus)
+      // // 判断下如果信息不对，提示登录失败
+      // if (!menusRes) {
+      //   return
+      // }
+      // // 4.保存到缓存中
+      // localCache.set('token', token)
+      // localCache.set('userInfo', userRes)
+      localCache.setCache(USER_MENUS, this.userMenus)
+      // // 5.保存到vuex中
+      // // 2.保存在cache中
+      // localCache.setCache('token', token)
 
-      // 4.根据role的id获取菜单
-      const roleId = this.userInfo.role.id
-      const menuRes = await getRoleMenus(roleId)
-      this.userMenus = menuRes.data
-      localCache.setCache('userMenus', this.userMenus)
+      // // 3.获取用户信息
+      // const userRes = await getUserById()
+      // this.userInfo = userRes.data
+      // localCache.setCache('useInfo', this.userInfo)
 
-      // 5.保存权限信息
-      const permissions = mapMenuToPersssions(this.userMenus)
-      this.permissions = permissions
-      localCache.setCache('permissions', this.permissions)
+      // // 4.根据role的id获取菜单
+      // const roleId = this.userInfo.role.id
+      // const menuRes = await getRoleMenus(roleId)
+      // this.userMenus = menuRes.data
+      // localCache.setCache('userMenus', this.userMenus)
 
-      // 5.获取所有的数据
-      const mainStore = useMainStore()
-      mainStore.fetchEntireDataAction()
+      // // 5.保存权限信息
+      // const permissions = mapMenuToPersssions(this.userMenus)
+      // this.permissions = permissions
+      // localCache.setCache('permissions', this.permissions)
 
-      // 5.动态添加路由
-      addRoutesWithMenu(this.userMenus)
+      // // 5.获取所有的数据
+      // const mainStore = useMainStore()
+      // mainStore.fetchEntireDataAction()
+
+      // // 5.动态添加路由
+      // addRoutesWithMenu(this.userMenus)
 
       // 跳转到首页
       router.push('/main')
@@ -72,11 +97,11 @@ const useLoginStore = defineStore('login', {
       this.userMenus = localCache.getCache('userMenus')
       this.permissions = localCache.getCache('permissions')
 
-      if (this.token && this.userMenus) {
-        addRoutesWithMenu(this.userMenus) // 获取所有的数据
-        const mainStore = useMainStore()
-        mainStore.fetchEntireDataAction()
-      }
+      // if (this.token && this.userMenus) {
+      //   addRoutesWithMenu(this.userMenus) // 获取所有的数据
+      //   const mainStore = useMainStore()
+      //   mainStore.fetchEntireDataAction()
+      // }
     }
   }
 })

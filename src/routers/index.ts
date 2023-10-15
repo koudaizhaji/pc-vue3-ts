@@ -7,9 +7,11 @@
  * @Description:路由入口文件
  * 相关开发文件头自动添加：联系微信huaiplayboy
  */
-
+import { LOGIN_TOKEN } from '../config'
+import { localCache } from '../utils/cache'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
+
 // 扩展继承属性
 interface extendRoute {
   hidden?: boolean
@@ -40,7 +42,7 @@ export const constantRoutes: Array<RouteRecordRaw & extendRoute> = [
     component: () => import('../views/base/login/login.vue')
   },
   {
-    path: '/home',
+    path: '/main',
     component: () => import('../views/base/home/home.vue')
   },
   {
@@ -52,15 +54,14 @@ export const constantRoutes: Array<RouteRecordRaw & extendRoute> = [
     path: '/403',
     name: '403',
     component: () => import('../views/public/err-page/403-view.vue')
-  },
-  {
-    path: '/:pathMatch(.*)',
-    redirect: '/403'
   }
+  // {
+  //   path: '/:pathMatch(.*)',
+  //   redirect: '/403'
+  // }
 ]
 
-/**
- * notFoundRouter(找不到路由)
+/** notFoundRouter(找不到路由)
  */
 export const notFoundRouter = {}
 
@@ -68,6 +69,17 @@ const router = createRouter({
   // history: createWebHistory(process.env.BASE_URL), // history
   history: createWebHashHistory(), // hash
   routes: constantRoutes
+})
+
+/** 导航守卫
+ * to：跳转的位置/from,从哪里跳转过来的
+ * 返回值：返回值决定导航路径
+ */
+router.beforeEach((to, from) => {
+  const token = localCache.getCache(LOGIN_TOKEN)
+  if (to.path === '/main' && !token) {
+    return '/login'
+  }
 })
 
 export default router

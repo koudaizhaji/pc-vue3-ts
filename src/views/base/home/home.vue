@@ -1,16 +1,45 @@
 <template>
-  <div class="home" style="background-image: url('@/assets/img/bg.jpg')">
-    <!-- <login-panel /> -->
-    <h2>home</h2>
+  <div class="main">
+    <el-container class="main-content">
+      <el-aside width="50px">
+        <TopMenu />
+      </el-aside>
+      <el-aside width="150px">
+        <MainMenu />
+      </el-aside>
+      <el-container>
+        <el-header height="30px"><Header /></el-header>
+        <el-main>Main</el-main>
+        <el-footer height="10px">Footer</el-footer>
+      </el-container>
+    </el-container>
   </div>
 </template>
 
 <script setup lang="ts">
-// import LoginPanel from "./c-cpns/login-panel.vue"
+import TopMenu from '@/components/public-components/menus/top-menu.vue'
+import MainMenu from '@/components/public-components/menus/main-menu.vue'
+import Header from '@/components/public-components/menus/header.vue'
 </script>
 
 <style lang="less" scoped>
-.home {
-  @apply flex flex-justify-center flex-items-center w-100\% h-100\% bg-center bg-no-repeat bg-cover;
+.main {
+  background: yellow;
+  height: 100%;
+}
+
+.main-content {
+  height: 100%;
+
+  .el-aside {
+    background-color: palegoldenrod;
+  }
+  .el-header {
+    // background-color: skyblue;
+    background-color: skyblue;
+  }
+  .el-main {
+    background-color: salmon;
+  }
 }
 </style>

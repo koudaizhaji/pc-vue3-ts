@@ -1,20 +1,25 @@
-import hyRequest from '..'
+// import { localCache } from '@/utils/cache'
+// import { LOGIN_TOKEN } from '@/config'
+import liliRequest from '../index'
 
 export function accountLogin(account: any) {
-  return hyRequest.post({
+  return liliRequest.post({
     url: '/pcadmin/login',
     data: account
   })
 }
 
 export function getUserById(id: number) {
-  return hyRequest.get({
-    url: '/users/' + id
+  return liliRequest.get({
+    url: '/pcadmin/user/info'
+    // headers: {
+    //   Authorization: localCache.getCache(LOGIN_TOKEN)
+    // }
   })
 }
 
-export function getRoleMenus(id: number) {
-  return hyRequest.get({
-    url: `/role/${id}/menu`
+export function getRoleMenus() {
+  return liliRequest.get({
+    url: `/pcadmin/rolemenus/mylist`
   })
 }

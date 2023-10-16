@@ -1,9 +1,12 @@
 // uno.config.ts
 import { defineConfig } from 'unocss'
 import presetIcons from '@unocss/preset-icons'
+import presetUno from '@unocss/preset-uno'
+
 
 export default defineConfig({
   presets: [
+    presetUno(),
     presetIcons({
       collections: {
         //把自己的svg文件转换为class，这里的my-icon名称随便取，使用的时候通过i-my-icon-[filename]。

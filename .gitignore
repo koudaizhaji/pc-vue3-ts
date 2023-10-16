@@ -26,3 +26,8 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+
+# others files or directories
+package-lock.json
+auto-imports.d.ts
+components.d.ts

@@ -6,31 +6,46 @@ import MainMenu from './main-menu.vue'
 
 <template>
   <el-container class="main-content">
-    <el-aside width="50px">
+    <el-aside width="200px">
       <TopMenu />
-    </el-aside>
-    <el-aside width="150px">
       <MainMenu />
     </el-aside>
     <el-container>
-      <el-header height="30px"><Header /></el-header>
+      <el-header height="50px">
+        <Header />
+      </el-header>
       <el-main>
         <router-view />
       </el-main>
-      <el-footer height="10px">Footer</el-footer>
+     <!-- <el-footer height="30px">
+        Footer
+      </el-footer>-->
     </el-container>
   </el-container>
 </template>
 
 <style scoped lang="less">
+.main-content {
+  height: 100%;
+  width: 100%;
+}
+
 .el-aside {
-  background-color: palegoldenrod;
+  height: 100%;
+  display: flex;
+  justify-content: left;
+  .top-menu {
+    width: 50px;
+  }
+  .main-menu {
+    width: 150px;
+  }
 }
 .el-header {
-  // background-color: skyblue;
-  background-color: skyblue;
+  background-color: #ffffff;
+  padding: 0;
 }
 .el-main {
-  background-color: salmon;
+  background-color: #F7FBFF;
 }
 </style>

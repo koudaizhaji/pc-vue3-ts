@@ -1,9 +1,3 @@
-<template>
-  <div class="header">
-    <h2>header</h2>
-    <button @click="handleExitClick">退出登录</button>
-  </div>
-</template>
 <script setup lang="ts">
 import { LOGIN_TOKEN } from '@/config'
 import { localCache } from '@/utils/cache'
@@ -18,12 +12,19 @@ const handleExitClick = () => {
   router.push('/login')
 }
 </script>
-<style scoped>
+
+<template>
+  <div class="header"></div>
+</template>
+<style scoped lang="less">
 .header {
-  /* width: 100%; */
-  background-color: skyblue;
+  width: 100%;
+  background-color: #ffffff;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  height: 50px;
+  border: 1px solid #d9d9d9;
+  box-sizing: border-box;
 }
 </style>

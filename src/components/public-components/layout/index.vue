@@ -15,7 +15,7 @@ import MainMenu from './main-menu.vue'
         <Header />
       </el-header>
       <el-main>
-        <router-view />
+        <slot></slot>
       </el-main>
      <!-- <el-footer height="30px">
         Footer

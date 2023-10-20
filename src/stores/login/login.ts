@@ -31,16 +31,13 @@ const useLoginStore = defineStore('login', {
     permissions: []
   }),
   actions: {
-    async accountLoginAction(account: any) {
-      // 1.获取登录信息
-      const loginRes = await accountLogin(account)
-      const { token } = loginRes
-      this.token = token
-      console.log('拿到的信息', loginRes, token, LOGIN_TOKEN)
+    setLoginInfo: async (data) => {
+      this.token = data.token
+      console.log('拿到的信息', data, token, LOGIN_TOKEN)
       // 判断下如果信息不对，提示登录失败
       localCache.setCache(LOGIN_TOKEN, this.token)
       // 2.获取用户信息
-      const userRes = await getUserById(loginRes.id)
+      const userRes = await getUserById(data.id)
       this.userInfo = userRes.data
       console.log('拿到的用户信息', userRes)
       localCache.setCache(USER_INFO, this.userInfo)
@@ -90,7 +87,6 @@ const useLoginStore = defineStore('login', {
       // 跳转到首页
       router.push('/main')
     },
-
     loadLocalDataAction() {
       this.token = localCache.getCache('token')
       this.userInfo = localCache.getCache('userInfo')

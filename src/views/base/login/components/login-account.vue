@@ -52,14 +52,14 @@
 import { ref, reactive } from 'vue'
 import type { FormInstance } from 'element-plus'
 import { ElMessage } from 'element-plus'
-import { useRouter } from 'vue-router'
-import { useUserStore } from '@/stores/modules/user'
-import { getTimeStateStr } from '@/utils/index'
+// import { useRouter } from 'vue-router'
+// import { useUserStore } from '@/stores/modules/user'
+// import { getTimeStateStr } from '@/utils/index'
 import useLoginStore from '@/stores/login/login'
 import { accountLogin } from '@/services/login/login'
 
-const router = useRouter()
-const UserStore = useUserStore()
+// const router = useRouter()
+// const UserStore = useUserStore()
 const formRef = ref<FormInstance>()
 const passwordType = ref('password')
 const loading = ref(false)
@@ -82,7 +82,7 @@ const showPwd = () => {
   passwordType.value = passwordType.value === 'password' ? '' : 'password'
 }
 
-const accountRef = ref<InstanceType<typeof PanelAccount>>()
+// const accountRef = ref<InstanceType<typeof PanelAccount>>()
 // 这里使用ref选中的formRef.value也行
 const submitForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return

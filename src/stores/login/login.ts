@@ -9,11 +9,11 @@
  */
 // import router, { addRoutesWithMenu } from '@/routers'
 import router from '@/routers'
-import { accountLogin, getRoleMenus, getUserById } from '@/services/login/login'
+import { getRoleMenus, getUserById } from '@/services/login/login'
 import { localCache } from '@/utils/cache'
 // import { mapMenuToPersssions } from '@/utils/map-menu'
 import { defineStore } from 'pinia'
-import { LOGIN_TOKEN, USER_INFO, USER_MENUS } from '../../config'
+import { LOGIN_TOKEN, USER_INFO, USER_MENUS } from '@/config'
 // import useMainStore from '../main/main'
 
 interface ILoginState {

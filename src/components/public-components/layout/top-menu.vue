@@ -7,18 +7,46 @@
  * @Description:  
  * 相关开发文件头自动添加：联系微信huaiplayboy
 -->
+<script lang="ts" setup>
+import { reactive } from 'vue'
+
+const list = reactive([
+  {
+    imgUrl:
+      'https://file.sheepjs.com/static/img/admin/access/wechat.png?imageMogr2/thumbnail/200x200',
+    route: ''
+  },
+  {
+    imgUrl:
+      'https://file.sheepjs.com/static/img/admin/access/wechat.png?imageMogr2/thumbnail/200x200',
+    route: ''
+  }
+])
+const info = reactive({
+  imgUrl: 'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png'
+})
+</script>
 <template>
-  <div class="top-menu">
-    <div class="c-red font-20rpx">top-Menu</div>
-    <button>底部设置</button>
+  <div class="top-menu bg-#252F3C flex flex-justify-between text-center">
+    <div class="c-red font-20rpx p-t-8px">
+      <el-avatar
+        class="m-b-4px cursor-pointer"
+        size=""
+        v-for="(item, index) of list"
+        :key="index"
+        :src="item.imgUrl"
+        shape="square"
+      />
+    </div>
+    <!--    <el-button>123465</el-button>-->
+    <div class="">
+      <el-avatar size="" :src="info.imgUrl" />
+    </div>
   </div>
 </template>
-<script setup lang="ts"></script>
 <style scoped>
 .top-menu {
-  /* display: none; */
   height: 100%;
-  background: chartreuse;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

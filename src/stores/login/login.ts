@@ -31,9 +31,10 @@ const useLoginStore = defineStore('login', {
     permissions: []
   }),
   actions: {
-    setLoginInfo: async (data) => {
+    async setLoginInfo(data: any) {
+      console.log(data)
       this.token = data.token
-      console.log('拿到的信息', data, token, LOGIN_TOKEN)
+      console.log('拿到的信息', data, data.token, LOGIN_TOKEN)
       // 判断下如果信息不对，提示登录失败
       localCache.setCache(LOGIN_TOKEN, this.token)
       // 2.获取用户信息

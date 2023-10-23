@@ -7,8 +7,8 @@
  * @Description:路由入口文件
  * 相关开发文件头自动添加：联系微信huaiplayboy
  */
-import { LOGIN_TOKEN } from '../config'
-import { localCache } from '../utils/cache'
+import { LOGIN_TOKEN } from '@/config'
+import { localCache } from '@/utils/cache'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 
@@ -98,7 +98,7 @@ const router = createRouter({
  * to：跳转的位置/from,从哪里跳转过来的
  * 返回值：返回值决定导航路径
  */
-router.beforeEach((to, from) => {
+router.beforeEach((to) => {
   const token = localCache.getCache(LOGIN_TOKEN)
   if (to.path === '/main' && !token) {
     return '/login'

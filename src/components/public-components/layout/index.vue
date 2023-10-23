@@ -60,6 +60,6 @@ const currentMenu = computed(
   padding: 0;
 }
 .el-main {
-  background-color: #F7FBFF;
+  background-color: #f7fbff;
 }
 </style>

@@ -1,13 +1,15 @@
 <template>
   <div class="main">
-    <Layout>
+    <Layout :menuList="menuList">
       <RouterView />
     </Layout>
   </div>
 </template>
 
 <script setup lang="ts">
-import Layout from '@/components/public-components/layout'
+import Layout from '@/components/public-components/layout/index.vue'
+import { localCache } from '@/utils/cache'
+const menuList = localCache.getCache('user_menus')
 </script>
 
 <style lang="less" scoped>

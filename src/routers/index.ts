@@ -31,7 +31,6 @@ interface extendRoute {
  * meta.affix ==> 如果设置为true将会出现在 标签栏中
  * meta.breadcrumb ==> 如果设置为false，该项将隐藏在breadcrumb中（默认值为true）
  */
-
 export const constantRoutes: Array<RouteRecordRaw & extendRoute> = [
   {
     path: '/',
@@ -43,7 +42,31 @@ export const constantRoutes: Array<RouteRecordRaw & extendRoute> = [
   },
   {
     path: '/main',
-    component: () => import('../views/base/home/home.vue')
+    component: () => import('../views/base/main/index.vue'),
+    children: [
+      {
+        path: '/main',
+        redirect: '/main/analysis'
+      },
+      {
+        path: '/main/analysis',
+        component: () => import('../views/base/main/analysis/index.vue'),
+        children: [
+          {
+            path: '',
+            redirect: '/main/analysis/overview'
+          },
+          {
+            path: '/main/analysis/overview',
+            component: () => import('../views/base/main/analysis/overview/index.vue')
+          },
+          {
+            path: '/main/analysis/dashboard',
+            component: () => import('../views/base/main/analysis/dashboard/index.vue')
+          }
+        ]
+      }
+    ]
   },
   {
     path: '/404',

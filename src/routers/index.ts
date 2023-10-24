@@ -27,6 +27,7 @@ export const constantRoutes: Array<RouteRecordRaw & extendRoute> = [
       },
       {
         path: 'analysis',
+        name: 'Analysis',
         component: () => import('../views/base/main/analysis/index.vue'),
         children: [
           {
@@ -35,13 +36,20 @@ export const constantRoutes: Array<RouteRecordRaw & extendRoute> = [
           },
           {
             path: 'overview',
+            name: 'AnalysisOverview',
             component: () => import('../views/base/main/analysis/overview/index.vue')
           },
           {
             path: 'dashboard',
+            name: 'AnalysisDashboard',
             component: () => import('../views/base/main/analysis/dashboard/index.vue')
           }
         ]
+      },
+      {
+        path: 'resource',
+        name: 'Resource',
+        component: () => import('../views/base/main/resource/index.vue')
       },
       {
         path: '/:pathMatch(.*)*',

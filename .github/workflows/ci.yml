@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main-dev" ]
+  pull_request:
+    branches: [ "main-dev" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x]
+
+    steps:
+    # 拉取代码
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    # 使用对应node
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: "16.x"
+
+    # 添加缓存，逻辑和CI Workflow里的一样
+    - name: Cache
+      id: cache-dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          **/node_modules
+        key: ${{runner.OS}}-${{hashFiles('**/package-lock.json')}}
+
+    # 安装依赖。命中缓存则跳过此步
+    - name: Installing Dependencies
+      if: steps.cache-dependencies.outputs.cache-hit != 'true'
+      run: npm install
+
+    - name: Eslint
+      run: npm run lint
+
+    # - name: Build
+    #   run: |
+    #     npm install
+    #     npx webpack

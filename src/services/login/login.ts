@@ -9,7 +9,7 @@ export function accountLogin(account: any) {
   })
 }
 
-export function getUserById(id: number) {
+export function getUserById() {
   return liliRequest.get({
     url: '/pcadmin/user/info'
     // headers: {

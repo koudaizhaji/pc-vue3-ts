@@ -12,7 +12,7 @@
 
 <script setup lang="ts" name="switchDark">
 import { Sunny, Moon } from '@element-plus/icons-vue'
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useSettingStore } from '@/stores/modules/setting'
 
 const SettingStore = useSettingStore()

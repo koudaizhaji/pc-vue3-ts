@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import TopMenu from './top-menu.vue'
-import Header from './header.vue'
-import MainMenu from './MainMenu/index.vue'
+import TopMenu from './TopMenu.vue'
+import Header from './Header.vue'
+import MainMenu from './MainMenu.vue'
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
 import type { MenuProps } from './index.ts'
 // import { defineProps } from 'vue' // 支持直接使用
 
-// eslint-disable-next-line vue/valid-define-props
 const props = defineProps<{
   menuList: MenuProps
 }>()
@@ -20,7 +19,7 @@ const currentMenu = computed(
 <template>
   <el-container class="main-content">
     <el-aside width="200px">
-      <TopMenu />
+      <TopMenu :menuList="props.menuList" />
       <MainMenu :currentMenu="currentMenu" />
     </el-aside>
     <el-container>

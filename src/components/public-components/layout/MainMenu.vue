@@ -1,9 +1,14 @@
 <script lang="ts" setup>
-import MenuItem from './MenuItem.vue'
+import MenuItem from './components/MenuItem.vue'
 import { useRoute } from 'vue-router'
+import { computed } from 'vue'
+import type { MenuItemProps } from './index'
 
-const props = defineProps(['currentMenu'])
+const props = defineProps<{
+  currentMenu: MenuItemProps
+}>()
 const route = useRoute()
+const routePath = computed(() => route.path)
 
 const handleOpen = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
@@ -16,7 +21,7 @@ const handleClose = (key: string, keyPath: string[]) => {
 <template>
   <div class="main-menu">
     <el-menu
-      :defaultActive="route.path"
+      :defaultActive="routePath"
       class="main-menu-content"
       @open="handleOpen"
       @close="handleClose"

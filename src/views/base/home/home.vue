@@ -9,7 +9,7 @@
       </el-aside>
       <el-container>
         <el-header height="30px"><Header /></el-header>
-        <el-main>Main</el-main>
+        <el-main><Welcome/></el-main>
         <el-footer height="10px">Footer</el-footer>
       </el-container>
     </el-container>
@@ -20,6 +20,7 @@
 import TopMenu from '@/components/public-components/menus/top-menu.vue'
 import MainMenu from '@/components/public-components/menus/main-menu.vue'
 import Header from '@/components/public-components/menus/header.vue'
+import Welcome from '../welcome/welcome.vue';
 </script>
 
 <style lang="less" scoped>
@@ -39,7 +40,7 @@ import Header from '@/components/public-components/menus/header.vue'
     background-color: skyblue;
   }
   .el-main {
-    background-color: salmon;
+    background-color: #f8f8f8;
   }
 }
 </style>

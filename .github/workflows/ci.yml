@@ -20,10 +20,10 @@ jobs:
       uses: actions/checkout@v3
 
     # 使用对应node
-    - name: Use Node.js
+    - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
-        node-version: "16.x"
+        node-version: ${{ matrix.node-version }}
 
     # 添加缓存，逻辑和CI Workflow里的一样
     - name: Cache

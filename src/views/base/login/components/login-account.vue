@@ -51,14 +51,15 @@
 <script lang="ts" setup>
 import { ref, reactive } from 'vue'
 import type { FormInstance } from 'element-plus'
-import { ElNotification } from 'element-plus'
-import { useRouter } from 'vue-router'
-import { useUserStore } from '@/stores/modules/user'
-import { getTimeStateStr } from '@/utils/index'
+import { ElMessage } from 'element-plus'
+// import { useRouter } from 'vue-router'
+// import { useUserStore } from '@/stores/modules/user'
+// import { getTimeStateStr } from '@/utils/index'
 import useLoginStore from '@/stores/login/login'
+import { accountLogin } from '@/services/login/login'
 
-const router = useRouter()
-const UserStore = useUserStore()
+// const router = useRouter()
+// const UserStore = useUserStore()
 const formRef = ref<FormInstance>()
 const passwordType = ref('password')
 const loading = ref(false)
@@ -81,7 +82,7 @@ const showPwd = () => {
   passwordType.value = passwordType.value === 'password' ? '' : 'password'
 }
 
-const accountRef = ref<InstanceType<typeof PanelAccount>>()
+// const accountRef = ref<InstanceType<typeof PanelAccount>>()
 // 这里使用ref选中的formRef.value也行
 const submitForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return
@@ -90,24 +91,29 @@ const submitForm = (formEl: FormInstance | undefined) => {
       loading.value = true
 
       console.log('拿到的用户名', account)
-      const { username, password } = account
       // 1.登录操作
-      loginStore.accountLoginAction({ username, password })
-      // 登录
-      // const res = await login()
-      // setTimeout(async () => {
-      //   await UserStore.login(ruleForm)
-      //   await router.push({
-      //     path: '/'
-      //   })
-      //   ElNotification({
-      //     title: getTimeStateStr(),
-      //     message: '欢迎登录 口袋炸鸡管理后台',
-      //     type: 'success',
-      //     duration: 3000
-      //   })
-      //   loading.value = true
-      // }, 1000)
+      accountLogin(account)
+        .then((data) => {
+          if (data.code === 0) {
+            // 后续操作交给pinia
+            loginStore.setLoginInfo(data)
+          } else if (data.code === 'S1000050') {
+            ElMessage({
+              type: 'error',
+              message: data.message
+            })
+          }
+        })
+        .catch((error) => {
+          console.error(error)
+          ElMessage({
+            type: 'error',
+            message: '登录失败，原因位置'
+          })
+        })
+        .finally(() => {
+          loading.value = false
+        })
     } else {
       console.log('error submit!')
       return false

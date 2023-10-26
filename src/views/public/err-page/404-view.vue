@@ -21,7 +21,7 @@
   </div>
 </template>
 
-<script lang="ts"></script>
+<script lang="ts" setup></script>
 <style lang="less" scoped>
 .wscn-http404-container {
   width: 100%;

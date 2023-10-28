@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import MenuItem from './components/MenuItem.vue'
+import MenuItem from './MenuItem.vue'
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
-import type { MenuItemProps } from './index'
+import type { MenuItemProps } from '../index'
 
 const props = defineProps<{
-  currentMenu: MenuItemProps
+  currentMenu: MenuItemProps | { children: [] }
 }>()
 const route = useRoute()
 const routePath = computed(() => route.path)
@@ -27,7 +27,11 @@ const handleClose = (key: string, keyPath: string[]) => {
       @close="handleClose"
       :router="true"
     >
-      <MenuItem v-for="(item, index) of props.currentMenu.children" :key="index" :item="item" />
+      <MenuItem
+        v-for="(item, index) of props.currentMenu.children || []"
+        :key="index"
+        :item="item"
+      />
     </el-menu>
   </div>
 </template>
@@ -36,8 +40,8 @@ const handleClose = (key: string, keyPath: string[]) => {
 .main-menu {
   background-color: rgba(255, 255, 255, 1);
   padding-top: 30px;
-  border-bottom-left-radius: 20px;
-  border-top-left-radius: 20px;
+  //border-bottom-left-radius: 20px;
+  //border-top-left-radius: 20px;
   border-right: 1px solid rgba(217, 217, 217, 0.7);
   box-sizing: border-box;
   height: 100%;

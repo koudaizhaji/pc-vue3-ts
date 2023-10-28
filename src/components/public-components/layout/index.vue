@@ -1,25 +1,36 @@
 <script setup lang="ts">
-import TopMenu from './TopMenu.vue'
+import TopMenu, { type TopMenuItemProps, type TopMenuProps } from './TopMenu/index.ts'
 import Header from './Header.vue'
-import MainMenu from './MainMenu.vue'
+import MainMenu from './MainMenu'
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
-import type { MenuProps } from './index.ts'
-// import { defineProps } from 'vue' // 支持直接使用
+import type { MenuProps, MenuItemProps } from './index.ts'
 
 const props = defineProps<{
   menuList: MenuProps
 }>()
 const route = useRoute()
-const currentMenu = computed(
-  () => props.menuList.find((item) => route.path.startsWith(item.url)) || {}
+const topMenu: TopMenuProps = [
+  { id: '111', name: '基础', icon: 'ri-home-3-fill' },
+  { id: '222', name: '微信', icon: 'ri-wechat-fill' },
+  { id: '333', name: '大学', icon: 'ri-school-fill' },
+  { id: '444', name: '商城', icon: 'ri-store-2-fill' }
+]
+const getCurrentTopMenu = (id: string, item: TopMenuItemProps) => {
+  console.log(id, item)
+}
+const currentMenu = computed<MenuItemProps | { children: [] }>(
+  () =>
+    props.menuList.find((item) => route.path.startsWith(item.url)) || {
+      children: []
+    }
 )
 </script>
 
 <template>
   <el-container class="main-content">
     <el-aside width="200px">
-      <TopMenu :menuList="props.menuList" />
+      <TopMenu :data="topMenu" :defineValue="'111'" @change="getCurrentTopMenu" />
       <MainMenu :currentMenu="currentMenu" />
     </el-aside>
     <el-container>

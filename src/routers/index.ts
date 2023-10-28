@@ -19,6 +19,7 @@ export const constantRoutes: Array<RouteRecordRaw & extendRoute> = [
   },
   {
     path: '/main',
+    // name: 'Main',
     component: () => import('../views/base/main/index.vue'),
     children: [
       {
@@ -27,7 +28,7 @@ export const constantRoutes: Array<RouteRecordRaw & extendRoute> = [
       },
       {
         path: 'analysis',
-        name: 'Analysis',
+        // name: 'Analysis',
         component: () => import('../views/base/main/analysis/index.vue'),
         children: [
           {
@@ -37,12 +38,25 @@ export const constantRoutes: Array<RouteRecordRaw & extendRoute> = [
           {
             path: 'overview',
             name: 'AnalysisOverview',
-            component: () => import('../views/base/main/analysis/overview/index.vue')
+            component: () => import('../views/base/main/analysis/overview/index.vue'),
+            meta: {
+              nav: [
+                { title: '首页', path: '/main/analysis' },
+                { title: '核心技术', path: '/main/analysis/overview' }
+              ],
+              isNormal: true
+            }
           },
           {
             path: 'dashboard',
             name: 'AnalysisDashboard',
-            component: () => import('../views/base/main/analysis/dashboard/index.vue')
+            component: () => import('../views/base/main/analysis/dashboard/index.vue'),
+            meta: {
+              nav: [
+                { title: '首页', path: '/main/analysis' },
+                { title: '大数据分析', path: '/main/analysis/dashboard' }
+              ]
+            }
           }
         ]
       },

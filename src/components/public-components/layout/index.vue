@@ -2,7 +2,7 @@
 import TopMenu, { type TopMenuItemProps, type TopMenuProps } from './TopMenu/index.ts'
 import Header from './Header.vue'
 import MainMenu from './MainMenu'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { computed } from 'vue'
 import type { MenuProps, MenuItemProps } from './index.ts'
 
@@ -25,6 +25,11 @@ const currentMenu = computed<MenuItemProps | { children: [] }>(
       children: []
     }
 )
+// 因为element breadcrumb 无法跳转路由而设置的
+const router = useRouter()
+const breadcrumbTo = (route?: string) => {
+  if (route) router.push(route)
+}
 </script>
 
 <template>
@@ -38,7 +43,19 @@ const currentMenu = computed<MenuItemProps | { children: [] }>(
         <Header />
       </el-header>
       <el-main>
-        <slot></slot>
+        <el-breadcrumb class="m-b-16px">
+          <el-breadcrumb-item
+            v-for="(item, index) of route.meta.nav || []"
+            :key="index"
+            :to="{ path: item.path }"
+            @click="breadcrumbTo(index === route.meta.nav.length - 1 ? null : item.path)"
+            >{{ item.title }}</el-breadcrumb-item
+          >
+        </el-breadcrumb>
+        <slot v-if="route.meta.isNormal"></slot>
+        <el-card v-else style="height: calc(100% - 32px)">
+          <slot></slot>
+        </el-card>
       </el-main>
       <!-- <el-footer height="30px">
         Footer

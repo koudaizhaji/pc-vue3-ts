@@ -1,6 +1,6 @@
 import Index from './index.vue'
 
-export type MenuItemProps = {
+export interface MenuItemProps {
   children: MenuItemProps[]
   createdAt: string
   icon: string
@@ -15,6 +15,6 @@ export type MenuItemProps = {
   url: string
 }
 
-export type MenuProps = MenuItemProps[]
+export interface MenuProps extends Array<MenuItemProps> {}
 
 export default Index

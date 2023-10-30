@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { StackedAreaTotalProps } from '@/components/echarts/line/index.ts'
-import StackedAreaTotal from '@/components/echarts/line/stacked-area-total.vue'
+import { StackedAreaTotal } from '@/components/echarts/line/index.ts'
 import { reactive } from 'vue'
 import { ElCard } from 'element-plus'
 
@@ -25,11 +25,9 @@ const stackedAreaProps = reactive<StackedAreaTotalProps>({
 </script>
 
 <template>
-  <ElCard style="grid-column: span 2">
+  <ElCard>
     <div class="h-290px">
       <StackedAreaTotal v-bind="stackedAreaProps" />
     </div>
   </ElCard>
 </template>
-
-<style scoped lang="less"></style>

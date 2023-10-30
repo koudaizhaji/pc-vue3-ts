@@ -17,7 +17,7 @@ const roleInfo = computed(() => {
 </script>
 
 <template>
-  <ElCard class="analysis-overview-user-info" style="grid-column: span 4">
+  <ElCard class="analysis-overview-user-info">
     <div class="flex flex-justify-left">
       <ElAvatar :size="70" src="https://kitaikuyo.one/usr/uploads/2023/09/262651084.png" />
       <div class="m-l-16px">

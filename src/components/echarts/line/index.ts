@@ -13,6 +13,8 @@ export interface StackedAreaProps {
 
 export interface StackedAreaTotalProps extends StackedAreaProps {}
 
+export { StackedArea, StackedAreaTotal }
+
 export default {
   StackedArea,
   StackedAreaTotal

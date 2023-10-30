@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import { ElCard } from 'element-plus'
 import UserInfo from './components/UserInfo.vue'
+import Fund from './components/Operation.vue'
 </script>
 
 <template>
   <div class="analysis-overview grid grid-cols-4 grid-gap-16px">
-    <UserInfo />
-    <ElCard style="grid-column: span 2"></ElCard>
+    <UserInfo /><!-- 用户信息，4格 -->
     <ElCard style="grid-column: span 2"></ElCard>
     <ElCard></ElCard>
-    <ElCard></ElCard>
+    <Fund /><!-- 资金信息，1格 -->
+    <ElCard style="grid-column: span 2"></ElCard>
     <ElCard></ElCard>
     <ElCard></ElCard>
   </div>

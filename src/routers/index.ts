@@ -6,9 +6,14 @@ import type { RouteRecordRaw } from 'vue-router'
 // 扩展继承属性
 interface extendRoute {
   hidden?: boolean
+  meta?: {
+    nav: Array<{ title: string; path: string }>
+  }
 }
 
-export const constantRoutes: Array<RouteRecordRaw & extendRoute> = [
+export interface RouterProps extends Array<RouteRecordRaw & extendRoute> {}
+
+export const constantRoutes: RouterProps = [
   {
     path: '/',
     redirect: '/login'

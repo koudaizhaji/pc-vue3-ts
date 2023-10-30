@@ -2,10 +2,10 @@
 import MenuItem from './MenuItem.vue'
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
-import type { MenuItemProps } from '../index'
+import type { MenuProps } from '../index'
 
 const props = defineProps<{
-  currentMenu: MenuItemProps | { children: [] }
+  menuList: MenuProps
 }>()
 const route = useRoute()
 const routePath = computed(() => route.path)
@@ -27,11 +27,7 @@ const handleClose = (key: string, keyPath: string[]) => {
       @close="handleClose"
       :router="true"
     >
-      <MenuItem
-        v-for="(item, index) of props.currentMenu.children || []"
-        :key="index"
-        :item="item"
-      />
+      <MenuItem v-for="(item, index) of props.menuList || []" :key="index" :item="item" />
     </el-menu>
   </div>
 </template>

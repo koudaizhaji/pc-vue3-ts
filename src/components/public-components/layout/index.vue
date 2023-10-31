@@ -3,8 +3,7 @@ import TopMenu, { type TopMenuItemProps, type TopMenuProps } from './TopMenu/ind
 import Header from './Header/index.vue'
 import MainMenu from './MainMenu'
 import { useRoute, useRouter } from 'vue-router'
-import { computed } from 'vue'
-import type { MenuProps, MenuItemProps } from './index.ts'
+import type { MenuProps } from './index.ts'
 
 const props = defineProps<{
   menuList: MenuProps
@@ -19,12 +18,6 @@ const topMenu: TopMenuProps = [
 const getCurrentTopMenu = (id: string, item: TopMenuItemProps) => {
   console.log(id, item)
 }
-const currentMenu = computed<MenuItemProps | { children: [] }>(
-  () =>
-    props.menuList.find((item) => route.path.startsWith(item.url)) || {
-      children: []
-    }
-)
 // 因为element breadcrumb 无法跳转路由而设置的
 const router = useRouter()
 const breadcrumbTo = (route?: string) => {
@@ -36,7 +29,7 @@ const breadcrumbTo = (route?: string) => {
   <el-container class="main-content">
     <el-aside width="200px">
       <TopMenu :data="topMenu" :defineValue="'111'" @change="getCurrentTopMenu" />
-      <MainMenu :currentMenu="currentMenu" />
+      <MainMenu :menuList="props.menuList || []" />
     </el-aside>
     <el-container>
       <el-header height="50px">

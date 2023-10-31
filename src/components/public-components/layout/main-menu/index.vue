@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import MenuItem from './MenuItem.vue'
+import MenuItem from './menu-item.vue'
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
 import type { MenuProps } from '../index'

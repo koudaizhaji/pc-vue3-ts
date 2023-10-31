@@ -1,7 +1,7 @@
 <!-- 该部分未使用 unocss 请注意 -->
 <script setup lang="ts">
-import Left from './Left.vue'
-import Right from './Right.vue'
+import Left from './left.vue'
+import Right from './right.vue'
 </script>
 
 <template>

@@ -5,10 +5,19 @@ import * as Icon from '@element-plus/icons-vue'
 const { item } = defineProps<{
   item: MenuItemProps
 }>()
+
+const findSubMenu = (children: MenuItemProps[]): boolean => {
+  if (!children.length) return false
+  let check = false
+  children.forEach((item) => {
+    check = check || item.url !== 'no-url'
+  })
+  return check
+}
 </script>
 
 <template>
-  <el-sub-menu :index="item.url" v-if="item.children && item.children.length">
+  <el-sub-menu :index="item.url" v-if="item.children && item.children.length && findSubMenu(item.children)">
     <template #title>
       <el-icon v-if="item.icon && item.icon.length"><component :is="Icon[item.icon]" /></el-icon>
       <span>{{ item.title }}</span>

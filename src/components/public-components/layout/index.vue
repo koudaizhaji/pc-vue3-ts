@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import TopMenu, { type TopMenuItemProps, type TopMenuProps } from './TopMenu/index.ts'
-import Header from './Header/index.vue'
-import MainMenu from './MainMenu'
+import TopMenu, { type TopMenuItemProps, type TopMenuProps } from '@/components/public-components/layout/top-menu/index.ts'
+import Header from '@/components/public-components/layout/header/index.vue'
+import MainMenu from './main-menu'
 import { useRoute, useRouter } from 'vue-router'
 import type { MenuProps } from './index.ts'
 

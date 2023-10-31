@@ -6,7 +6,6 @@ import { ElCard } from 'element-plus'
 
 const randomData = (): number[] => {
   const arr = new Array(5).fill(0)
-  console.log(arr.map(() => 1000 + parseInt((1000 * Math.random()).toFixed(1))))
   return arr.map(() => 1000 + parseInt((1000 * Math.random()).toFixed(1)))
 }
 

@@ -30,8 +30,8 @@ onMounted(() => {
 
 // pagination
 const pagination = reactive<PublicPaginationProps>({
-  currentPage: props.currentPage,
-  pageSize: props.pageSize
+  currentPage: props.currentPage || 1,
+  pageSize: props.pageSize || 10
 })
 const handleSizeChange = (val: number) => {
   pagination.pageSize = val
@@ -59,6 +59,7 @@ const change = () => {
       v-if="maxHeight > 0"
       :maxHeight="props.hiddenPagination ? maxHeight : maxHeight - 30"
       :data="tableData"
+      :showHeader="props.showHeader"
       stripe
       size="small"
     >
@@ -78,6 +79,7 @@ const change = () => {
       </ElTableColumn>
     </ElTable>
     <ElPagination
+      v-if="!props.hiddenPagination"
       class="flex-justify-right"
       :currentPage="pagination.currentPage"
       :page-size="pagination.pageSize"
@@ -85,7 +87,7 @@ const change = () => {
       :small="true"
       :background="false"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="props.total"
+      :total="props.total || 0"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
     />

@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ElCard, ElTag, type TagProps } from 'element-plus'
-import PublicTable, { type PublicTableProps, type PublicPaginationProps } from '@/components/public-components/public-table'
+import PublicTable, {
+  type PublicTableProps,
+  type PublicPaginationProps
+} from '@/components/public-components/public-table'
 import { h, type VNode } from 'vue'
 
 const publicTableProps: PublicTableProps = {

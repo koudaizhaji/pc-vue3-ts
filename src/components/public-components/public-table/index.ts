@@ -18,17 +18,22 @@ export interface PublicPaginationProps {
 }
 
 export interface PublicTableProps {
+  // 隐藏分页器
   hiddenPagination?: boolean
+  // 隐藏表头
+  showHeader?: boolean
+  // 列表数据
   data: object[]
+  // 列表列配置项
   columns: PublicTableColumnProps[]
   // 加载
   loading?: boolean
   // 当前页码
-  currentPage: number
+  currentPage?: number
   // 每页数据量
-  pageSize: number
+  pageSize?: number
   // 总数
-  total: number
+  total?: number
 }
 
 export default PublicTable

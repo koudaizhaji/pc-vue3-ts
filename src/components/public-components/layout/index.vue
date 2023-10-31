@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import TopMenu, { type TopMenuItemProps, type TopMenuProps } from '@/components/public-components/layout/top-menu/index.ts'
+import TopMenu, {
+  type TopMenuItemProps,
+  type TopMenuProps
+} from '@/components/public-components/layout/top-menu/index'
 import Header from '@/components/public-components/layout/header/index.vue'
 import MainMenu from './main-menu'
 import { useRoute, useRouter } from 'vue-router'
@@ -45,7 +48,7 @@ const breadcrumbTo = (route?: string) => {
             >{{ item.title }}</el-breadcrumb-item
           >
         </el-breadcrumb>
-        <slot v-if="route.meta.isNormal"></slot>
+        <slot v-if="route.meta.isSpecially"></slot>
         <el-card v-else style="height: calc(100% - 32px)">
           <slot></slot>
         </el-card>

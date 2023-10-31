@@ -12,10 +12,23 @@ export interface PublicTableColumnProps {
   customer?: (text: string | number, item?: object, index?: number) => string | VNode
 }
 
+export interface PublicPaginationProps {
+  currentPage: number
+  pageSize: number
+}
+
 export interface PublicTableProps {
   hiddenPagination?: boolean
   data: object[]
   columns: PublicTableColumnProps[]
+  // 加载
+  loading?: boolean
+  // 当前页码
+  currentPage: number
+  // 每页数据量
+  pageSize: number
+  // 总数
+  total: number
 }
 
 export default PublicTable

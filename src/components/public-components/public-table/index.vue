@@ -1,40 +1,93 @@
+<!-- todolist
+   列表还缺少以下功能，待完善
+   selection 多选
+   Radio 单选
+   sort 排序
+ -->
+
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import { ElTable, ElTableColumn, ElPagination } from 'element-plus'
-import type { PublicTableProps } from './index.ts'
+import type { PublicPaginationProps, PublicTableProps } from './index.ts'
 
 const props = defineProps<PublicTableProps>()
+const emits = defineEmits<{
+  (e: 'change', pagination: PublicPaginationProps): void
+}>()
+
+// table
 const maxHeight = ref<number>(0)
 const publicSearch = ref<HTMLDivElement>()
+const tableData = computed(() => {
+  return props.data.slice(
+    (pagination.currentPage - 1) * pagination.pageSize,
+    pagination.currentPage * pagination.pageSize
+  )
+})
 onMounted(() => {
   maxHeight.value = publicSearch.value?.offsetHeight as number
 })
-console.log(props.columns[3]?.customer(3))
+
+// pagination
+const pagination = reactive<PublicPaginationProps>({
+  currentPage: props.currentPage,
+  pageSize: props.pageSize
+})
+const handleSizeChange = (val: number) => {
+  pagination.pageSize = val
+  pagination.currentPage = 1
+  change()
+}
+const handleCurrentChange = (val: number) => {
+  pagination.currentPage = val
+  change()
+}
+
+// emits
+const change = () => {
+  emits('change', pagination)
+}
 </script>
 
 <template>
-  <div ref="publicSearch" class="h-full">
-    <el-table
+  <div
+    ref="publicSearch"
+    class="h-full flex flex-justify-between flex-col"
+    v-loading="props.loading"
+  >
+    <ElTable
       v-if="maxHeight > 0"
       :maxHeight="props.hiddenPagination ? maxHeight : maxHeight - 30"
-      :data="props.data"
+      :data="tableData"
       stripe
       size="small"
     >
-      <el-table-column
-        v-for="(item, index) of props.columns"
+      <ElTableColumn
+        v-for="item of props.columns"
         :key="item.prop"
         :prop="item.prop"
         :label="item.label"
         :width="item.width"
       >
-        <template v-if="item.customer">
-          <component :is="item.customer(props.data[index][item.prop], props.data[index], index)" />
+        <template v-if="item.customer" v-slot:default="scope">
+          <component :is="item.customer(scope.row[item.prop], scope.row, scope.$index)" />
         </template>
-        <template v-else>
-          {{ props.data[index][item.prop] }}
+        <template v-else v-slot:default="scope">
+          {{ scope.row[item.prop] }}
         </template>
-      </el-table-column>
-    </el-table>
+      </ElTableColumn>
+    </ElTable>
+    <ElPagination
+      class="flex-justify-right"
+      :currentPage="pagination.currentPage"
+      :page-size="pagination.pageSize"
+      :page-sizes="[5, 10, 20, 50, 100]"
+      :small="true"
+      :background="false"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="props.total"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    />
   </div>
 </template>

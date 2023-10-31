@@ -1,11 +1,17 @@
 <script setup lang="ts">
 import { ElCard, ElTag, type TagProps } from 'element-plus'
-import PublicTable, { type PublicTableProps } from '@/components/public-components/public-table'
+import PublicTable, { type PublicTableProps, type PublicPaginationProps } from '@/components/public-components/public-table'
 import { h, type VNode } from 'vue'
 
 const publicTableProps: PublicTableProps = {
   hiddenPagination: false,
   data: [
+    {
+      date: '2016-05-04',
+      name: 'Tom',
+      address: 'No. 189, Grove St, Los Angeles',
+      tag: 3
+    },
     {
       date: '2016-05-03',
       name: 'Tom',
@@ -19,16 +25,40 @@ const publicTableProps: PublicTableProps = {
       tag: 2
     },
     {
-      date: '2016-05-04',
+      date: '2016-05-01',
       name: 'Tom',
       address: 'No. 189, Grove St, Los Angeles',
       tag: 3
     },
     {
-      date: '2016-05-01',
+      date: '2016-04-30',
       name: 'Tom',
       address: 'No. 189, Grove St, Los Angeles',
-      tag: 3
+      tag: 2
+    },
+    {
+      date: '2016-04-29',
+      name: 'Tom',
+      address: 'No. 189, Grove St, Los Angeles',
+      tag: 2
+    },
+    {
+      date: '2016-04-28',
+      name: 'Tom',
+      address: 'No. 189, Grove St, Los Angeles',
+      tag: 1
+    },
+    {
+      date: '2016-04-27',
+      name: 'Tom',
+      address: 'No. 189, Grove St, Los Angeles',
+      tag: 2
+    },
+    {
+      date: '2016-04-26',
+      name: 'Tom',
+      address: 'No. 189, Grove St, Los Angeles',
+      tag: 1
     }
   ],
   columns: [
@@ -44,10 +74,12 @@ const publicTableProps: PublicTableProps = {
           h(
             ElTag,
             {
-              effect: 'light',
-              type: type
+              props: {
+                effect: 'light',
+                type: type
+              }
             },
-            text
+            { default: () => text }
           )
         switch (text) {
           case 1:
@@ -60,7 +92,14 @@ const publicTableProps: PublicTableProps = {
         }
       }
     }
-  ]
+  ],
+  currentPage: 1,
+  pageSize: 5,
+  total: 9
+}
+const changePublicTableProps = (pagination: PublicPaginationProps) => {
+  publicTableProps.currentPage = pagination.currentPage
+  publicTableProps.pageSize = pagination.pageSize
 }
 </script>
 
@@ -68,7 +107,7 @@ const publicTableProps: PublicTableProps = {
   <ElCard>
     <template v-slot:header><div class="h-20px line-height-20px">待完成事项</div></template>
     <div class="h-234px">
-      <PublicTable v-bind="publicTableProps" />
+      <PublicTable v-bind="publicTableProps" @change="changePublicTableProps" />
     </div>
   </ElCard>
 </template>

@@ -10,7 +10,7 @@ const randomData = (): number[] => {
 }
 
 const stackedAreaProps = reactive<StackedAreaTotalProps>({
-  loading: false,
+  loading: true,
   data: [
     { name: '收入1', data: randomData() },
     { name: '收入2', data: randomData() },
@@ -21,6 +21,10 @@ const stackedAreaProps = reactive<StackedAreaTotalProps>({
   title: '收入统计',
   timeLine: ['10-30', '10-29', '10-28', '10-27', '10-26']
 })
+
+setTimeout(() => {
+  stackedAreaProps.loading = false
+}, 1000)
 </script>
 
 <template>

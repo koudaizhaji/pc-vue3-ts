@@ -6,13 +6,16 @@ import { reactive } from 'vue'
 
 const doughnutProps = reactive<DoughnutProps>({
   title: '收入来源分类',
-  loading: false,
+  loading: true,
   data: [
     { name: '面包房', value: 3440 },
     { name: '翘脚牛肉店', value: 4232 },
     { name: '奶茶店', value: 3542 }
   ]
 })
+setTimeout(() => {
+  doughnutProps.loading = false
+}, 1000)
 </script>
 
 <template>

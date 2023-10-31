@@ -30,6 +30,7 @@ const initialEchart = () => {
 }
 const updateEchart = () => {
   echartDom.setOption(props.option)
+  echartDom.resize()
 }
 
 onMounted(() => {

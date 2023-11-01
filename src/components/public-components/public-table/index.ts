@@ -1,4 +1,5 @@
 import PublicTable from './index.vue'
+import type { TableProps } from 'element-plus'
 import type { VNode } from 'vue'
 
 export interface PublicTableColumnProps {
@@ -9,7 +10,7 @@ export interface PublicTableColumnProps {
   // 表列宽度
   width?: number | string
   // 列dom
-  customer?: (text: string | number, item?: object, index?: number) => string | VNode
+  customer?: (text: any, item?: object, index?: number) => string | VNode
 }
 
 export interface PublicPaginationProps {
@@ -21,11 +22,13 @@ export interface PublicTableProps {
   // 隐藏分页器
   hiddenPagination?: boolean
   // 隐藏表头
-  showHeader?: boolean
+  hiddenHeader?: boolean
   // 列表数据
   data: object[]
   // 列表列配置项
   columns: PublicTableColumnProps[]
+  // 列表尺寸
+  size?: TableProps<any>['size']
   // 加载
   loading?: boolean
   // 当前页码

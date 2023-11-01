@@ -16,16 +16,12 @@ const emits = defineEmits<{
 }>()
 
 // table
-const maxHeight = ref<number>(0)
 const publicSearch = ref<HTMLDivElement>()
 const tableData = computed(() => {
   return props.data.slice(
     (pagination.currentPage - 1) * pagination.pageSize,
     pagination.currentPage * pagination.pageSize
   )
-})
-onMounted(() => {
-  maxHeight.value = publicSearch.value?.offsetHeight as number
 })
 
 // pagination
@@ -55,14 +51,7 @@ const change = () => {
     class="h-full flex flex-justify-between flex-col"
     v-loading="props.loading"
   >
-    <ElTable
-      v-if="maxHeight > 0"
-      :maxHeight="props.hiddenPagination ? maxHeight : maxHeight - 30"
-      :data="tableData"
-      :showHeader="props.showHeader"
-      stripe
-      size="small"
-    >
+    <ElTable :data="tableData" :showHeader="!props.hiddenHeader" stripe :size="props.size">
       <ElTableColumn
         v-for="item of props.columns"
         :key="item.prop"
@@ -80,7 +69,7 @@ const change = () => {
     </ElTable>
     <ElPagination
       v-if="!props.hiddenPagination"
-      class="flex-justify-right"
+      class="flex-justify-right m-t-12px"
       :currentPage="pagination.currentPage"
       :page-size="pagination.pageSize"
       :page-sizes="[5, 10, 20, 50, 100]"

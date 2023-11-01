@@ -6,7 +6,7 @@ import PublicTable, {
 
 const publicTableProps: PublicTableProps = {
   hiddenPagination: true,
-  showHeader: false,
+  hiddenHeader: true,
   data: [
     { title: '面包房-氛围灯损坏' },
     { title: '奶茶店-制冷器异常，无法出冰' },

@@ -1,7 +1,19 @@
 <script setup lang="ts">
-import TopMenu, { type TopMenuItemProps, type TopMenuProps } from './TopMenu/index.ts'
-import Header from './Header/index.vue'
-import MainMenu from './MainMenu'
+import TopMenu, {
+  type TopMenuItemProps,
+  type TopMenuProps
+} from '@/components/public-components/layout/top-menu/index'
+import {
+  ElContainer,
+  ElAside,
+  ElHeader,
+  ElMain,
+  ElBreadcrumb,
+  ElBreadcrumbItem,
+  ElCard
+} from 'element-plus'
+import Header from '@/components/public-components/layout/header/index.vue'
+import MainMenu from './main-menu'
 import { useRoute, useRouter } from 'vue-router'
 import type { MenuProps } from './index.ts'
 
@@ -26,35 +38,35 @@ const breadcrumbTo = (route?: string) => {
 </script>
 
 <template>
-  <el-container class="main-content">
-    <el-aside width="200px">
+  <ElContainer class="main-content">
+    <ElAside width="200px">
       <TopMenu :data="topMenu" :defineValue="'111'" @change="getCurrentTopMenu" />
       <MainMenu :menuList="props.menuList || []" />
-    </el-aside>
-    <el-container>
-      <el-header height="50px">
+    </ElAside>
+    <ElContainer>
+      <ElHeader height="50px">
         <Header />
-      </el-header>
-      <el-main>
-        <el-breadcrumb class="m-b-16px">
-          <el-breadcrumb-item
+      </ElHeader>
+      <ElMain>
+        <ElBreadcrumb class="m-b-16px">
+          <ElBreadcrumbItem
             v-for="(item, index) of route.meta.nav || []"
             :key="index"
             :to="{ path: item.path }"
             @click="breadcrumbTo(index === route.meta.nav.length - 1 ? null : item.path)"
-            >{{ item.title }}</el-breadcrumb-item
+            >{{ item.title }}</ElBreadcrumbItem
           >
-        </el-breadcrumb>
-        <slot v-if="route.meta.isNormal"></slot>
-        <el-card v-else style="height: calc(100% - 32px)">
+        </ElBreadcrumb>
+        <slot v-if="route.meta.isSpecially"></slot>
+        <ElCard v-else style="height: calc(100% - 32px)">
           <slot></slot>
-        </el-card>
-      </el-main>
+        </ElCard>
+      </ElMain>
       <!-- <el-footer height="30px">
         Footer
       </el-footer>-->
-    </el-container>
-  </el-container>
+    </ElContainer>
+  </ElContainer>
 </template>
 
 <style scoped lang="less">
@@ -81,5 +93,10 @@ const breadcrumbTo = (route?: string) => {
 }
 .el-main {
   background-color: #f7fbff;
+}
+/deep/ .el-card {
+  .el-card__body {
+    height: calc(100% - 40px);
+  }
 }
 </style>

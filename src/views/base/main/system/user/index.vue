@@ -1,5 +1,5 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="resource">资源管理</div>
+  <div class="user">人员</div>
 </template>

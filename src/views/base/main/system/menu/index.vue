@@ -2,7 +2,7 @@
 import PublicSearch from '@/components/public-components/public-search/index'
 import PublicTable from '@/components/public-components/public-table/index'
 import { ElButton } from 'element-plus'
-import { columns, tableData } from './hooks'
+import { columns, tableData, searchConfig } from './hooks'
 </script>
 
 <template>

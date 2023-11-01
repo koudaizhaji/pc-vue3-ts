@@ -2,6 +2,7 @@
 import { ElButton, ElInput, ElTag } from 'element-plus'
 import { Search, ArrowUpBold } from '@element-plus/icons-vue'
 import { ref } from 'vue'
+import { transitionHooks } from './hooks'
 
 const show = ref<boolean>(false)
 const setShow = () => {
@@ -17,8 +18,10 @@ const setShow = () => {
         <ElButton :icon="show ? ArrowUpBold : Search" @click="setShow" />
       </div>
     </div>
-    <div v-show="show" class="h-40px">
-      <ElInput class="mt-8px" size="default"></ElInput>
-    </div>
+    <Transition v-bind="transitionHooks">
+      <div v-show="show" class="h-40px">
+        <ElInput class="mt-8px" size="default"></ElInput>
+      </div>
+    </Transition>
   </div>
 </template>

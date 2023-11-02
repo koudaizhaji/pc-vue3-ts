@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@iconify-json/mdi": "^1.1.54",
+    "@iconify-json/tabler": "^1.1.96",
     "@rushstack/eslint-patch": "^1.3.3",
     "@tsconfig/node18": "^18.2.2",
     "@types/jsdom": "^21.1.3",

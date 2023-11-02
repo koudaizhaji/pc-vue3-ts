@@ -1,5 +1,22 @@
 import PublicSearch from './index.vue'
 
+// 记录PublicSearch组件的type
+export enum PublicSearchTypeList {
+  'input',
+  'selectOne',
+  'select-one',
+  'selectMore',
+  'select-more',
+  'others'
+}
+
+export interface PublicSearchItemProps {
+  key: string
+  value: string | number | boolean
+  type: PublicSearchTypeList
+  label: string
+}
+
 export interface PublicSearchInputProps {
   type: 'input'
   label: string

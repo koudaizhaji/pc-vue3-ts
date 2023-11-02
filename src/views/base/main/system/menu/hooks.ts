@@ -187,7 +187,8 @@ export const tableData = [
 export const searchConfig: PublicSearchProps = {
   config: [
     { type: 'input', key: 'name', label: '菜单名称' },
-    { type: 'input', key: 'url', label: '菜单地址' },
+    { type: 'input', key: 'aaa', label: 'aaa' },
+    { type: 'input', key: 'bbb', label: 'bbb' },
     {
       type: 'selectOne',
       key: 'status',
@@ -197,7 +198,8 @@ export const searchConfig: PublicSearchProps = {
         { value: true, label: '启用' },
         { value: true, label: '禁用' }
       ]
-    }
+    },
+    { type: 'input', key: 'fff', label: '名称很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长' }
   ]
 }
 

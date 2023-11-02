@@ -7,7 +7,7 @@ import { columns, tableData, searchConfig } from './hooks'
 
 <template>
   <div class="menu h-full flex flex-col flex-justify-left">
-    <PublicSearch>
+    <PublicSearch v-bind="searchConfig">
       <ElButton>创建</ElButton>
       <ElButton>编辑</ElButton>
       <ElButton>删除</ElButton>

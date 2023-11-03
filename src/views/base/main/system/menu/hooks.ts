@@ -196,7 +196,23 @@ export const searchConfig: PublicSearchProps = {
       options: [
         { value: '', label: '全部' },
         { value: true, label: '启用' },
-        { value: true, label: '禁用' }
+        {
+          value: false,
+          label: '禁用1111111111111111111111111111111111111111111111111111111111111111111111111'
+        }
+      ]
+    },
+    {
+      type: 'selectMore',
+      key: 'status',
+      label: '菜单状态',
+      options: [
+        { value: '', label: '全部' },
+        { value: '1', label: '1' },
+        { value: '2', label: '2' },
+        { value: '3', label: '3' },
+        { value: '4', label: '4' },
+        { value: '1111111111111111111111111111111111111111111111111111111111111111111111111', label: '1111111111111111111111111111111111111111111111111111111111111111111111111' }
       ]
     },
     {

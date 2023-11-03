@@ -85,7 +85,7 @@ export enum PublicSearchTypeList {
 export interface PublicSearchItemProps {
   key: string
   value: string | number | boolean | Array<string | number | boolean>
-  valueTitle: string
+  valueTitle: string | string[]
   type: PublicSearchTypeList
   label: string
 }
@@ -97,8 +97,8 @@ export interface PublicSearchInputProps {
 }
 
 interface SelectOption {
-  value: string | number | boolean | Array<string | number | boolean>
-  label: string | number
+  value: string | number | boolean
+  label: string
   disabled?: boolean
 }
 

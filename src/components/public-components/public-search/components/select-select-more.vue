@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ElInput, ElPopover, ElButton, ElRadio } from 'element-plus'
+import { ElInput, ElPopover, ElButton, ElCheckbox } from 'element-plus'
 import type { PublicSearchItemProps, PublicSearchSelectOneProps } from '../index'
-import { ref } from 'vue'
+import { reactive } from 'vue'
 import { handleKeyDown, handleKeyDownEsc, type SearchItemEmits } from '../hooks'
 
 const props = defineProps<{
@@ -10,16 +10,31 @@ const props = defineProps<{
 }>()
 const emits = defineEmits<SearchItemEmits>()
 
-const selectValue = ref<number>(
-  props.currentConfig.options.findIndex((item) => item.value === props.currentItem.value)
-)
+const selectValue = reactive<Set<number>>(new Set())
 const setSelectValue = (index: number) => {
-  selectValue.value = index
+  if (selectValue.has(index)) {
+    selectValue.delete(index)
+  } else {
+    selectValue.add(index)
+  }
 }
 
+const aaa = props.currentItem.value
+if (Array.isArray(aaa)) {
+  aaa.forEach((item: number | boolean | string) => {
+    setSelectValue(props.currentConfig.options.findIndex((it) => it.value === item))
+  })
+}
+
+console.log(selectValue)
+
 const submit = () => {
-  const item = props.currentConfig.options[selectValue.value] as { value: any; label: string }
-  emits('submit', item.value, item.label)
+  const item = Array.from(selectValue).map((item) => props.currentConfig.options[item])
+  emits(
+    'submit',
+    item.map((item) => item.value),
+    item.map((item) => item.label)
+  )
 }
 const cancel = () => emits('cancel')
 const keydown = (e) => {
@@ -49,18 +64,17 @@ const keydown = (e) => {
             v-for="(item, index) of currentConfig.options as PublicSearchSelectOneProps['options']"
             :key="index"
           >
-            <ElRadio
+            <ElCheckbox
               size="large"
-              v-model="selectValue"
-              :label="index"
+              :checked="selectValue.has(index)"
               :disabled="item.disabled"
               @click="setSelectValue(index)"
             >
               <div class="max-w-248px truncate">{{ item.label }}</div>
-            </ElRadio>
+            </ElCheckbox>
           </div>
           <div class="text-right m-t-8px p-t-8px border-t-1px border-t-solid border-#dcdfe6">
-            <ElButton type="default" size="small" :disabled="selectValue < 0" @click="submit"
+            <ElButton type="default" size="small" :disabled="selectValue.size < 0" @click="submit"
               >确定</ElButton
             >
             <ElButton style="margin-left: 4px" type="" size="small" @click="cancel">取消</ElButton>

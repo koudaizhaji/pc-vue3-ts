@@ -12,7 +12,8 @@ const emits = defineEmits<{
   (e: 'edit', item: PublicSearchItemProps): void
 }>()
 
-const getInfo = (item: PublicSearchItemProps) => `${item.label}：${item.valueTitle}`
+const getInfo = (item: PublicSearchItemProps) =>
+  `${item.label}：${Array.isArray(item.valueTitle) ? item.valueTitle.join(',') : item.valueTitle}`
 const showList = computed(() => {
   if (props.setList.length <= 3) return [props.setList, []]
   const [first, second, ...others] = props.setList
@@ -37,11 +38,16 @@ const editItem = (item: PublicSearchItemProps) => {
       @click="editItem(item)"
       @close="removeItem(item)"
     >
-      <div class="max-w-82px truncate">{{ getInfo(item) }}</div>
+      <div class="max-w-90px truncate">{{ getInfo(item) }}</div>
     </ElTag>
-    <ElPopover trigger="click" placement="bottom-start" width="100px">
+    <ElPopover
+      :disabled="!showList[1].length"
+      trigger="click"
+      placement="bottom-start"
+      width="110px"
+    >
       <template v-slot:reference>
-        <ElTag v-show="showList[1].length" size="large">更多...</ElTag>
+        <ElTag v-show="showList[1].length">更多...</ElTag>
       </template>
       <template v-slot:default>
         <ElTag
@@ -53,7 +59,7 @@ const editItem = (item: PublicSearchItemProps) => {
           @click="editItem(item)"
           @close="removeItem(item)"
         >
-          <div class="w-82px truncate">{{ getInfo(item) }}</div>
+          <div class="w-90px truncate">{{ getInfo(item) }}</div>
         </ElTag>
       </template>
     </ElPopover>

@@ -8,6 +8,7 @@ import Tags from './components/tags.vue'
 import SelectNothing from './components/select-nothing.vue'
 import SelectInput from './components/select-input.vue'
 import SelectSelectOne from './components/select-select-one.vue'
+import SelectSelectMore from './components/select-select-more.vue'
 
 const props = defineProps<PublicSearchProps>()
 
@@ -108,6 +109,15 @@ const setShow = () => {
               @cancel="cancelCurrentItem"
               @submit="submitCurrentItem"
             />
+            <SelectSelectMore
+              v-else-if="
+                currentItem[0].type === 'selectMore' || currentItem[0].type === 'select-more'
+              "
+              :currentItem="currentItem[0]"
+              :currentConfig="currentConfig[0]"
+              @cancel="cancelCurrentItem"
+              @submit="submitCurrentItem"
+            />
           </div>
         </div>
         <el-button-group class="m-t-4px">
@@ -130,7 +140,7 @@ const setShow = () => {
   border-radius: 4px;
 }
 
-/deep/ .el-input {
+:deep(.el-input) {
   .el-input__wrapper {
     border: none;
     box-shadow: none;

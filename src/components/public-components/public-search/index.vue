@@ -100,7 +100,9 @@ const setShow = () => {
               @submit="submitCurrentItem"
             />
             <SelectSelectOne
-              v-else-if="currentItem[0].type === 'selectOne' || currentItem[0].type === 'select-one'"
+              v-else-if="
+                currentItem[0].type === 'selectOne' || currentItem[0].type === 'select-one'
+              "
               :currentItem="currentItem[0]"
               :currentConfig="currentConfig[0]"
               @cancel="cancelCurrentItem"

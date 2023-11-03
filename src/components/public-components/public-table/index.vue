@@ -6,7 +6,7 @@
  -->
 
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { ElTable, ElTableColumn, ElPagination } from 'element-plus'
 import type { PublicPaginationProps, PublicTableProps } from './index.ts'
 

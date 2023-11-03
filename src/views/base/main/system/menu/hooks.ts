@@ -1,4 +1,5 @@
 import type { PublicTableColumnProps } from '@/components/public-components/public-table/index'
+import type { PublicSearchProps } from '@/components/public-components/public-search/index'
 import { ElTag } from 'element-plus'
 import { h } from 'vue'
 
@@ -183,7 +184,51 @@ export const tableData = [
   }
 ]
 
+export const searchConfig: PublicSearchProps = {
+  config: [
+    { type: 'input', key: 'name', label: '菜单名称' },
+    { type: 'input', key: 'aaa', label: 'aaa' },
+    { type: 'input', key: 'bbb', label: 'bbb' },
+    {
+      type: 'selectOne',
+      key: 'status',
+      label: '菜单状态',
+      options: [
+        { value: '', label: '全部' },
+        { value: true, label: '启用' },
+        {
+          value: false,
+          label: '禁用1111111111111111111111111111111111111111111111111111111111111111111111111'
+        }
+      ]
+    },
+    {
+      type: 'selectMore',
+      key: 'status',
+      label: '菜单状态',
+      options: [
+        { value: '', label: '全部' },
+        { value: '1', label: '1' },
+        { value: '2', label: '2' },
+        { value: '3', label: '3' },
+        { value: '4', label: '4' },
+        {
+          value: '1111111111111111111111111111111111111111111111111111111111111111111111111',
+          label: '1111111111111111111111111111111111111111111111111111111111111111111111111'
+        }
+      ]
+    },
+    {
+      type: 'input',
+      key: 'fff',
+      label:
+        '名称很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长'
+    }
+  ]
+}
+
 export default {
   columns,
-  tableData
+  tableData,
+  searchConfig
 }

@@ -1,22 +1,19 @@
 <script setup lang="ts">
 import { ElInput } from 'element-plus'
 import type { PublicSearchItemProps } from '../index'
-import { handleKeyDown, handleKeyDownEsc, handleKeyDownEnter } from '../hooks'
+import { handleKeyDown, handleKeyDownEsc, handleKeyDownEnter, SearchItemEmits } from '../hooks'
 import { ref } from 'vue'
 
 const props = defineProps<{
   currentItem: PublicSearchItemProps
 }>()
-const emits = defineEmits<{
-  (e: 'submit', value: PublicSearchItemProps['value']): void
-  (e: 'cancel'): void
-}>()
+const emits = defineEmits<SearchItemEmits>()
 
 const inputValue = ref<string>(props.currentItem.value as string)
 const keydown = (e: KeyboardEvent | Event) => {
   if (inputValue.value?.length === 0) handleKeyDown(e, () => emits('cancel'))
   handleKeyDownEsc(e, () => emits('cancel'))
-  handleKeyDownEnter(e, () => emits('submit', inputValue.value))
+  handleKeyDownEnter(e, () => emits('submit', inputValue.value, inputValue.value))
 }
 </script>
 

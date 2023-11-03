@@ -7,6 +7,7 @@ import { type PublicSearchItemProps, type PublicSearchProps, PublicSearchTypeLis
 import Tags from './components/tags.vue'
 import SelectNothing from './components/select-nothing.vue'
 import SelectInput from './components/select-input.vue'
+import SelectSelectOne from './components/select-select-one.vue'
 
 const props = defineProps<PublicSearchProps>()
 
@@ -21,19 +22,28 @@ const unSetList = reactive<PublicSearchItemProps[]>(
 )
 const setList = reactive<PublicSearchItemProps[]>([])
 const currentItem = reactive<PublicSearchItemProps[]>([])
+const currentConfig = reactive<any[]>([])
 
 // 在未填写搜索项中选择备选项
-const selectUnSetItemToCurrent = (_: PublicSearchItemProps, index: number) => {
+const selectUnSetItemToCurrent = (item: PublicSearchItemProps, index: number) => {
   currentItem.push(...unSetList.splice(index, 1))
-  console.log(currentItem[0])
+  currentConfig.splice(
+    0,
+    1,
+    props.config.find((it) => it.key === item.key)
+  )
 }
 // 取消当前填写搜索项
 const cancelCurrentItem = () => {
   unSetList.push(...currentItem.splice(0, 1))
 }
 // 提交时将记录放在已填写搜索项中
-const submitCurrentItem = (value: PublicSearchItemProps['value']) => {
+const submitCurrentItem = (
+  value: PublicSearchItemProps['value'],
+  valueTitle: PublicSearchItemProps['valueTitle']
+) => {
   currentItem[0].value = value
+  currentItem[0].valueTitle = valueTitle
   setList.push(...currentItem.splice(0, 1))
 }
 // 移除已填写搜索内容
@@ -46,6 +56,11 @@ const removeSetList = (item: PublicSearchItemProps) => {
 const editSetList = (item: PublicSearchItemProps) => {
   const findIndex = setList.findIndex((it) => it.key === item.key)
   currentItem.push(...setList.splice(findIndex, 1))
+  currentConfig.splice(
+    0,
+    1,
+    props.config.find((it) => it.key === item.key)
+  )
 }
 
 // 显示隐藏搜索表单
@@ -81,6 +96,13 @@ const setShow = () => {
             <SelectInput
               v-else-if="currentItem[0].type === 'input'"
               :currentItem="currentItem[0]"
+              @cancel="cancelCurrentItem"
+              @submit="submitCurrentItem"
+            />
+            <SelectSelectOne
+              v-else-if="currentItem[0].type === 'selectOne' || currentItem[0].type === 'select-one'"
+              :currentItem="currentItem[0]"
+              :currentConfig="currentConfig[0]"
               @cancel="cancelCurrentItem"
               @submit="submitCurrentItem"
             />

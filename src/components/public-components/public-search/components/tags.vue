@@ -8,11 +8,11 @@ const props = defineProps<{
   currentItem: PublicSearchItemProps[]
 }>()
 const emits = defineEmits<{
-  (e: 'remove', item: PublicSearchItemProps): void,
+  (e: 'remove', item: PublicSearchItemProps): void
   (e: 'edit', item: PublicSearchItemProps): void
 }>()
 
-const getInfo = (item: PublicSearchItemProps) => `${item.label}：${item.value}`
+const getInfo = (item: PublicSearchItemProps) => `${item.label}：${item.valueTitle}`
 const showList = computed(() => {
   if (props.setList.length <= 3) return [props.setList, []]
   const [first, second, ...others] = props.setList

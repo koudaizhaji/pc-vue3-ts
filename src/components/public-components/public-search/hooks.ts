@@ -49,24 +49,24 @@ export const transitionHooks = {
 }
 
 // 未写入时退格符号 退出当前所选项
-export const handleKeyDown = (e: KeyboardEvent, cb: Function) => {
-  if (e.keyCode === 8) {
+export const handleKeyDown = (e: KeyboardEvent | Event, cb: Function) => {
+  if ('keyCode' in e && e.keyCode === 8) {
     // 处理退格符号的逻辑
     cb()
   }
 }
 
 // esc事件（自动退出）
-export const handleKeyDownEsc = (e: KeyboardEvent, cb: Function) => {
-  if (event.keyCode === 27) {
+export const handleKeyDownEsc = (e: KeyboardEvent | Event, cb: Function) => {
+  if ('keyCode' in e && e.keyCode === 27) {
     // 处理退格符号的逻辑
     cb()
   }
 }
 
 // enter事件（type = input时候提交）
-export const handleKeyDownEnter = (e: KeyboardEvent, cb: Function) => {
-  if (event.keyCode === 13) {
+export const handleKeyDownEnter = (e: KeyboardEvent | Event, cb: Function) => {
+  if ('keyCode' in e && e.keyCode === 13) {
     // 处理退格符号的逻辑
     cb()
   }

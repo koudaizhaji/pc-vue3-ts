@@ -36,6 +36,17 @@ const submitCurrentItem = (value: PublicSearchItemProps['value']) => {
   currentItem[0].value = value
   setList.push(...currentItem.splice(0, 1))
 }
+// 移除已填写搜索内容
+const removeSetList = (item: PublicSearchItemProps) => {
+  item.value = ''
+  const findIndex = setList.findIndex((it) => it.key === item.key)
+  unSetList.push(...setList.splice(findIndex, 1))
+}
+// 编辑已填写搜索内容
+const editSetList = (item: PublicSearchItemProps) => {
+  const findIndex = setList.findIndex((it) => it.key === item.key)
+  currentItem.push(...setList.splice(findIndex, 1))
+}
 
 // 显示隐藏搜索表单
 const show = ref<boolean>(false)
@@ -55,7 +66,12 @@ const setShow = () => {
     <Transition v-bind="transitionHooks">
       <div v-show="show" class="public-search-show-content">
         <div class="w-full flex flex-items-center">
-          <Tags :setList="setList" />
+          <Tags
+            :setList="setList"
+            :currentItem="currentItem"
+            @remove="removeSetList"
+            @edit="editSetList"
+          />
           <div class="w-full">
             <SelectNothing
               v-if="currentItem.length === 0"
@@ -84,7 +100,16 @@ const setShow = () => {
   display: grid;
   grid-template-columns: 1fr 98px;
   width: 100%;
-  padding-top: 8px;
+  margin-top: 8px;
   height: 32px;
+  border: 1px #dcdfe6 solid;
+  border-radius: 4px;
+}
+
+/deep/ .el-input {
+  .el-input__wrapper {
+    border: none;
+    box-shadow: none;
+  }
 }
 </style>

@@ -12,20 +12,28 @@ const emits = defineEmits<{
   (e: 'cancel'): void
 }>()
 
-const inputValue = ref<string>(props.currentItem.value)
-const keydown = (e) => {
-  if (inputValue.value.length === 0) handleKeyDown(e, () => emits('cancel'))
+const inputValue = ref<string>(props.currentItem.value as string)
+const keydown = (e: KeyboardEvent | Event) => {
+  if (inputValue.value?.length === 0) handleKeyDown(e, () => emits('cancel'))
   handleKeyDownEsc(e, () => emits('cancel'))
-  handleKeyDownEnter(e, () => emits('submit', inputValue))
+  handleKeyDownEnter(e, () => emits('submit', inputValue.value))
 }
 </script>
 
 <template>
-  <ElInput
-    clearable
-    size="default"
-    :placeholder="`请输入${props.currentItem.label}`"
-    v-model="inputValue"
-    @keydown="keydown"
-  ></ElInput>
+  <div class="flex flex-justify-between">
+    <div
+      class="max-w-80px text-right truncate line-height-32px font-size-12px flex-basis-100px p-x-10px"
+    >
+      {{ props.currentItem.label }}
+    </div>
+    <ElInput
+      class="flex-grow-1"
+      clearable
+      size="default"
+      :placeholder="`请输入${props.currentItem.label}`"
+      v-model="inputValue"
+      @keydown="keydown"
+    ></ElInput>
+  </div>
 </template>

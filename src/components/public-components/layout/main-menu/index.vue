@@ -44,16 +44,12 @@ const handleClose = (key: string, keyPath: string[]) => {
 }
 .main-menu-content {
   /* 常规 */
-  //--el-menu-bg-color: rgba(47, 58, 77, 1);
-  //--el-menu-text-color: #ecf7ff;
-  // --el-menu-active-color:
-  //--el-menu-hover-bg-color: rgba(59, 73, 96, 1);
   border: 0;
-  .el-menu-item.is-active {
-    //background-color: rgba(37, 47, 60, 1);
-    &:hover {
-      //background-color: rgba(59, 73, 96, 1);
-    }
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(255, 255, 255, 1);
+  :deep(.el-menu-item.is-active) {
+    background-color: #ecf5ff;
   }
 }
 </style>

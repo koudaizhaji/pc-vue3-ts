@@ -17,7 +17,7 @@ const selectItem = (item, index) => {
 <template>
   <ElPopover trigger="click" placement="bottom-start" width="100px">
     <template v-slot:reference>
-      <ElInput size="default" placeholder="请选择搜索项"></ElInput>
+      <ElInput size="default" autofocus placeholder="请选择搜索项"></ElInput>
     </template>
     <template v-slot:default>
       <div class="max-h-150px">

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ElInput } from 'element-plus'
 import type { PublicSearchItemProps } from '../index'
-import { handleKeyDown, handleKeyDownEsc, handleKeyDownEnter, SearchItemEmits } from '../hooks'
+import { handleKeyDown, handleKeyDownEsc, handleKeyDownEnter, type SearchItemEmits } from '../hooks'
 import { ref } from 'vue'
 
 const props = defineProps<{
@@ -25,6 +25,7 @@ const keydown = (e: KeyboardEvent | Event) => {
       {{ props.currentItem.label }}
     </div>
     <ElInput
+      autofocus
       class="flex-grow-1"
       clearable
       size="default"

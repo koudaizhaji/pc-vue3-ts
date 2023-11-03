@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ElButton } from 'element-plus'
-import { Search, ArrowUpBold } from '@element-plus/icons-vue'
+import { Search, ArrowUpBold, RefreshRight } from '@element-plus/icons-vue'
 import { reactive, ref } from 'vue'
 import { transitionHooks } from './hooks'
 import { type PublicSearchItemProps, type PublicSearchProps, PublicSearchTypeList } from './index'
@@ -11,6 +11,10 @@ import SelectSelectOne from './components/select-select-one.vue'
 import SelectSelectMore from './components/select-select-more.vue'
 
 const props = defineProps<PublicSearchProps>()
+const emits = defineEmits<{
+  (e: 'submit', searchForm: Record<string, any>): void
+  (e: 'reset', searchForm: Record<string, string>): void
+}>()
 
 // 初始化，分为 未填写搜索项、已填写搜索项、当前填写搜索项
 const unSetList = reactive<PublicSearchItemProps[]>(
@@ -69,6 +73,27 @@ const show = ref<boolean>(false)
 const setShow = () => {
   show.value = !show.value
 }
+const submit = () => {
+  const out: Record<string, any> = {}
+  setList.forEach((item) => {
+    out[item.key] = item.value
+  })
+  unSetList.forEach((item) => {
+    out[item.key] = item.value
+  })
+  emits('submit', out)
+}
+const reset = () => {
+  unSetList.push(
+    ...currentItem,
+    ...setList.splice(0, setList.length).map((item) => ({ ...item, value: '' }))
+  )
+  const out: Record<string, string> = {}
+  unSetList.forEach((item) => {
+    out[item.key] = ''
+  })
+  emits('reset', out)
+}
 </script>
 
 <template>
@@ -76,7 +101,11 @@ const setShow = () => {
     <div class="public-search flex flex-justify-between">
       <div><slot name="default"></slot></div>
       <div>
-        <ElButton :icon="show ? ArrowUpBold : Search" @click="setShow" />
+        <ElButton
+          :type="show ? '' : 'primary'"
+          :icon="show ? ArrowUpBold : Search"
+          @click="setShow"
+        />
       </div>
     </div>
     <Transition v-bind="transitionHooks">
@@ -120,9 +149,9 @@ const setShow = () => {
             />
           </div>
         </div>
-        <el-button-group class="m-t-4px">
-          <el-button :icon="Search" />
-          <el-button :icon="Search" />
+        <el-button-group>
+          <el-button class="p-x-16px p-y-8px" @click="reset" text :icon="RefreshRight" />
+          <el-button class="p-x-16px p-y-8px" @click="submit" text :icon="Search" />
         </el-button-group>
       </div>
     </Transition>

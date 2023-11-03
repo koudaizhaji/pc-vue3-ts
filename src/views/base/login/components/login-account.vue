@@ -15,7 +15,7 @@
           @keyup.enter.native="submitForm(formRef)"
         >
           <template #prefix>
-            <div class="i-mdi-account-badge-outline font-size-20rpx"></div>
+            <div class="i-tabler-pig-money font-size-20rpx"></div>
           </template>
         </el-input>
       </el-form-item>
@@ -29,12 +29,14 @@
           :type="passwordType"
         >
           <template #prefix>
-            <div class="i-mdi-alpha-m-circle-outline"></div>
+            <div class="i-tabler-lock-open"></div>
           </template>
           <template #suffix>
             <div class="show-pwd" @click="showPwd">
               <!-- <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" /> -->
-              <div :class="passwordType === 'password' ? 'i-mdi-eye-off' : 'i-mdi-eye'"></div>
+              <div
+                :class="passwordType === 'password' ? 'i-tabler-eye-closed' : 'i-tabler-eye'"
+              ></div>
             </div>
           </template>
         </el-input>

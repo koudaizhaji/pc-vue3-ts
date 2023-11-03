@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
 import type { TopMenuProps, TopMenuItemProps } from './index.ts'
+import logoPng from '@/assets/imgs/logo.png'
 
 const props = defineProps<{
   data: TopMenuProps
@@ -16,9 +17,6 @@ const getMenuItemClass = (item: TopMenuItemProps) => {
   if (active.value === item.id) return 'c-#70B2F6'
   return 'c-#FEFEFE'
 }
-const info = reactive({
-  imgUrl: 'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png'
-})
 </script>
 <template>
   <div class="h-full top-menu flex-col bg-#252F3C flex flex-justify-between text-center">
@@ -35,7 +33,7 @@ const info = reactive({
     </div>
     <!--    <el-button>123465</el-button>-->
     <div class="">
-      <el-avatar size="" :src="info.imgUrl" />
+      <el-avatar size="" :src="logoPng" />
     </div>
   </div>
 </template>

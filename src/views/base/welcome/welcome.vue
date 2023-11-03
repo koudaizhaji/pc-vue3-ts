@@ -1,3 +1,4 @@
+<!-- 当前内容被放到了 '../views/base/main/analysis/dashboard/index.vue' -->
 <template>
   <div class="welcome">
     <div class="welcome-left">
@@ -90,36 +91,18 @@
 <script setup lang="ts">
 import * as echarts from 'echarts'
 import { onMounted, ref } from 'vue'
+import todayImage from '@s-assets/imgs/welcome/today.png'
+import yesterdayImage from '@s-assets/imgs/welcome/yesterday.png'
+import weekImage from '@s-assets/imgs/welcome/week.png'
+import mouthImage from '@s-assets/imgs/welcome/mouth.png'
 const arr = [
-  {
-    name: '今日访问量',
-    total: '189',
-    mobile: '89',
-    pc: '100',
-    url: '../../../assets/imgs/welcome/today.png'
-  },
-  {
-    name: '昨日访问量',
-    total: '456',
-    mobile: '256',
-    pc: '200',
-    url: '../../../assets/imgs/welcome/yesterday.png'
-  },
-  {
-    name: '本周访问量',
-    total: '4533',
-    mobile: '2533',
-    pc: '2000',
-    url: '../../../assets/imgs/welcome/week.png'
-  },
-  {
-    name: '本月访问量',
-    total: '7958',
-    mobile: '4958',
-    pc: '3000',
-    url: '../../../assets/imgs/welcome/mouth.png'
-  }
+  { name: '今日访问量', total: '189', mobile: '89', pc: '100', url: todayImage },
+  { name: '昨日访问量', total: '456', mobile: '256', pc: '200', url: yesterdayImage },
+  { name: '本周访问量', total: '4533', mobile: '2533', pc: '2000', url: weekImage },
+  { name: '本月访问量', total: '7958', mobile: '4958', pc: '3000', url: mouthImage }
 ]
+// console.log(arr[0].url,'url');
+
 const arr2 = [
   { name: '添加内容' },
   { name: '添加图片' },

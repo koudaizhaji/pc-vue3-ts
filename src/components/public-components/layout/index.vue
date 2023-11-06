@@ -39,7 +39,7 @@ const breadcrumbTo = (route?: string) => {
 
 <template>
   <ElContainer class="main-content">
-    <ElAside width="200px">
+    <ElAside width="250px">
       <TopMenu :data="topMenu" :defineValue="'111'" @change="getCurrentTopMenu" />
       <MainMenu :menuList="props.menuList || []" />
     </ElAside>
@@ -81,10 +81,10 @@ const breadcrumbTo = (route?: string) => {
   justify-content: left;
   background-color: #252f3c;
   .top-menu {
-    width: 50px;
+    width: 75px;
   }
   .main-menu {
-    width: 150px;
+    width: 175px;
   }
 }
 .el-header {
@@ -94,7 +94,7 @@ const breadcrumbTo = (route?: string) => {
 .el-main {
   background-color: #f7fbff;
 }
-/deep/ .el-card {
+:deep(.el-card) {
   .el-card__body {
     height: calc(100% - 40px);
   }

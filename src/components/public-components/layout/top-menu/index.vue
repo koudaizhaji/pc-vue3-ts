@@ -1,28 +1,41 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
-import type { TopMenuProps, TopMenuItemProps } from './index.ts'
+import { ref, watch } from 'vue'
 import { ElDropdown, ElDropdownMenu, ElDropdownItem, ElMessage } from 'element-plus'
 import logoPng from '@/assets/imgs/logo.png'
 import { localCache } from '@/utils/cache'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+import type { MenuProps, MenuItemProps } from '@/components/public-components/layout/index'
 
 const props = defineProps<{
-  data: TopMenuProps
-  defineValue?: string
+  data: MenuProps
 }>()
-const emits = defineEmits(['change'])
-const active = ref<string>(props?.defineValue || '')
+const emits = defineEmits<{
+  (e: 'change', id: number | string, index: number): void
+}>()
+const route = useRoute()
 const router = useRouter()
+const active = ref<string | number>('')
+watch(
+  route,
+  () => {
+    active.value = props.data.find((item) => route.path.startsWith(item.url))?.id as string | number
+    emits('change', active.value, -1)
+  },
+  {
+    deep: true,
+    immediate: true
+  }
+)
 
-const setActive = (item: TopMenuItemProps) => {
+const setActive = (item: MenuItemProps, index: number) => {
   active.value = item.id
-  emits('change', item.id, item)
+  router.push(item.url)
+  emits('change', item.id, index)
 }
-const getMenuItemClass = (item: TopMenuItemProps) => {
+const getMenuItemClass = (item: MenuItemProps) => {
   if (active.value === item.id) return 'c-#70B2F6'
   return 'c-#FEFEFE'
 }
-
 const logout = () => {
   new Promise((resolve) => {
     setTimeout(() => {
@@ -41,16 +54,20 @@ const logout = () => {
 }
 </script>
 <template>
-  <div class="h-full top-menu flex-col bg-#252F3C flex flex-justify-between text-center">
+  <div
+    class="h-full top-menu flex-col bg-#252F3C flex flex-justify-between text-center select-none"
+  >
     <div class="font-20rpx p-t-8px">
       <div
         v-for="(item, index) of props.data"
         :key="index"
         :class="`m-t-8px cursor-pointer p-t-8px p-b-8px hover-bg-#45505D ${getMenuItemClass(item)}`"
-        @click="setActive(item)"
+        @click="setActive(item, index)"
       >
-        <div><i :class="`${item.icon} font-size-24px font-normal`"></i></div>
-        <div>{{ item.name }}</div>
+        <div :class="`i-ic-${item.icon} text-center w-full font-size-26px h-26px`">
+          <i :class="`i-${item.icon}`"></i>
+        </div>
+        <div>{{ item.title }}</div>
       </div>
     </div>
     <!--    <el-button>123465</el-button>-->

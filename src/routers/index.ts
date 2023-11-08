@@ -2,12 +2,11 @@ import { LOGIN_TOKEN } from '@/config'
 import { localCache } from '@/utils/cache'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
-import mainRoutes from './mainRoutes'
-import systemRoutes from './systemRoutes'
-import businessRoutes from './businessRoutes'
-import productRoutes from './productRoutes'
-import distributeRoutes from './distributeRoutes'
-import resourceRoutes from './resourceRoutes'
+import baseRoutes from './routes/baseRoutes'
+import weixinRoutes from './routes/weixinRoutes'
+import screenRoutes from './routes/screenRoutes'
+import studyRoutes from './routes/studyRoutes'
+import chatRoutes from './routes/chatRoutes'
 
 // 扩展继承属性
 interface extendRoute {
@@ -22,43 +21,33 @@ export interface RouterProps extends Array<RouteRecordRaw & extendRoute> {}
 
 export const constantRoutes: RouterProps = [
   {
-    path: '/',
-    redirect: '/login'
-  },
-  {
     path: '/login',
-    component: () => import('../views/base/login/login.vue')
+    component: () => import('@/views/login/login.vue')
   },
   {
-    path: '/main',
-    // name: 'Main',
-    component: () => import('../views/base/main/index.vue'),
+    path: '/',
+    component: () => import('@/views/index.vue'),
     children: [
       {
         path: '',
-        redirect: '/main/analysis'
+        redirect: '/base'
       },
-      ...mainRoutes,
-      ...systemRoutes,
-      ...businessRoutes,
-      ...productRoutes,
-      ...distributeRoutes,
-      ...resourceRoutes,
+      ...baseRoutes,
+      ...weixinRoutes,
+      ...screenRoutes,
+      ...studyRoutes,
+      ...chatRoutes,
       {
         path: '/:pathMatch(.*)*',
+        name: '404',
         component: () => import('../views/public/err-page/404-view.vue')
+      },
+      {
+        path: '403',
+        name: '403',
+        component: () => import('../views/public/err-page/403-view.vue')
       }
     ]
-  },
-  {
-    path: '/404',
-    name: '404',
-    component: () => import('../views/public/err-page/404-view.vue')
-  },
-  {
-    path: '/403',
-    name: '403',
-    component: () => import('../views/public/err-page/403-view.vue')
   }
 ]
 
@@ -74,6 +63,7 @@ const router = createRouter({
 
 router.beforeEach((to, _, next) => {
   const token = localCache.getCache(LOGIN_TOKEN)
+  console.log(to)
   if (to.path !== '/login' && !token) {
     return next('/login')
   }

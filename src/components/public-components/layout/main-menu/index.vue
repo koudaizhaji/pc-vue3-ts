@@ -41,6 +41,7 @@ const handleClose = (key: string, keyPath: string[]) => {
   border-right: 1px solid rgba(217, 217, 217, 0.7);
   box-sizing: border-box;
   height: 100%;
+  user-select: none;
 }
 .main-menu-content {
   /* 常规 */

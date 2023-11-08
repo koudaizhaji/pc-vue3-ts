@@ -16,7 +16,8 @@ export default defineConfig({
         // carbon: () => import('@iconify-json/carbon/icons.json').then(i => i.default),
         // mdi: () => import('@iconify-json/mdi/icons.json').then((i) => i.default)
         // logos: () => import('@iconify-json/logos/icons.json').then(i => i.default),
-        tabler: () => import('@iconify-json/tabler/icons.json').then((i) => i.default)
+        // tabler: () => import('@iconify-json/tabler/icons.json').then((i) => i.default)
+        ic: () => import('@iconify-json/ic/icons.json').then((i) => i.default)
       },
       scale: 1.2,
       warn: true

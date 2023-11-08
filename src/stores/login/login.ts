@@ -86,7 +86,7 @@ const useLoginStore = defineStore('login', {
       // addRoutesWithMenu(this.userMenus)
 
       // 跳转到首页
-      router.push('/main')
+      router.push('/')
     },
     loadLocalDataAction() {
       this.token = localCache.getCache('token')

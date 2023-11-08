@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import TopMenu, {
-  type TopMenuItemProps,
-  type TopMenuProps
-} from '@/components/public-components/layout/top-menu/index'
+import TopMenu from './top-menu/index'
 import {
   ElContainer,
   ElAside,
@@ -16,22 +13,21 @@ import Header from '@/components/public-components/layout/header/index.vue'
 import MainMenu from './main-menu'
 import { useRoute, useRouter } from 'vue-router'
 import type { MenuProps } from './index.ts'
+import { computed, ref } from 'vue'
 
 const props = defineProps<{
   menuList: MenuProps
 }>()
 const route = useRoute()
-const topMenu: TopMenuProps = [
-  { id: '111', name: '基础', icon: 'ri-home-3-fill' },
-  { id: '222', name: '微信', icon: 'ri-wechat-fill' },
-  { id: '333', name: '大学', icon: 'ri-school-fill' },
-  { id: '444', name: '商城', icon: 'ri-store-2-fill' }
-]
-const getCurrentTopMenu = (id: string, item: TopMenuItemProps) => {
-  console.log(id, item)
-}
 // 因为element breadcrumb 无法跳转路由而设置的
 const router = useRouter()
+const topMenuId = ref<number | string>()
+const setTopMenuId = (id: string | number) => {
+  topMenuId.value = id
+}
+const mainMenuLise = computed(() => {
+  return props.menuList.find((item) => item.id === topMenuId.value)?.children
+})
 const breadcrumbTo = (route?: string) => {
   if (route) router.push(route)
 }
@@ -40,8 +36,8 @@ const breadcrumbTo = (route?: string) => {
 <template>
   <ElContainer class="main-content">
     <ElAside width="250px">
-      <TopMenu :data="topMenu" :defineValue="'111'" @change="getCurrentTopMenu" />
-      <MainMenu :menuList="props.menuList || []" />
+      <TopMenu :data="props.menuList" @change="setTopMenuId" />
+      <MainMenu :menuList="mainMenuLise || []" />
     </ElAside>
     <ElContainer>
       <ElHeader height="50px">

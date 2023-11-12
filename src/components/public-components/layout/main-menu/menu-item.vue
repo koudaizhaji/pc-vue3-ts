@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { MenuItemProps } from '../index'
-import * as Icon from '@element-plus/icons-vue'
+import { getIcon } from '@/utils/getICIcon'
 
 const { item } = defineProps<{
   item: MenuItemProps
@@ -22,13 +22,13 @@ const findSubMenu = (children: MenuItemProps[]): boolean => {
     v-if="item.children && item.children.length && findSubMenu(item.children)"
   >
     <template #title>
-      <el-icon v-if="item.icon && item.icon.length"><component :is="Icon[item.icon]" /></el-icon>
+      <el-icon v-if="item.icon && item.icon.length"><component :is="getIcon(item.icon)" /></el-icon>
       <span>{{ item.title }}</span>
     </template>
     <MenuItem v-for="(it, i) of item.children" :key="i" :item="it" />
   </el-sub-menu>
   <el-menu-item v-else :index="item.url">
-    <el-icon v-if="item.icon && item.icon.length"><component :is="Icon[item.icon]" /></el-icon>
+    <el-icon v-if="item.icon && item.icon.length"><component :is="getIcon(item.icon)" /></el-icon>
     <span>{{ item.title }}</span>
   </el-menu-item>
 </template>

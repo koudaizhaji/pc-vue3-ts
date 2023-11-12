@@ -8,6 +8,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+import Icons from 'unplugin-icons/vite'
 import path from 'path'
 
 // https://vitejs.dev/config/
@@ -16,6 +17,7 @@ export default defineConfig({
     vue(),
     vueJsx(),
     UnoCSS(),
+    Icons({ compiler: 'vue3', autoInstall: true }),
     AutoImport({
       resolvers: [ElementPlusResolver()]
     }),

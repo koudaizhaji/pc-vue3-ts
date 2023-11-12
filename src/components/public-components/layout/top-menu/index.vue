@@ -1,10 +1,11 @@
 <script lang="ts" setup>
-import { ref, watch } from 'vue'
+import { ref, watch, h } from 'vue'
 import { ElDropdown, ElDropdownMenu, ElDropdownItem, ElMessage } from 'element-plus'
 import logoPng from '@/assets/imgs/logo.png'
 import { localCache } from '@/utils/cache'
 import { useRoute, useRouter } from 'vue-router'
 import type { MenuProps, MenuItemProps } from '@/components/public-components/layout/index'
+import { getIcon } from '@/utils/getICIcon'
 
 const props = defineProps<{
   data: MenuProps
@@ -64,8 +65,8 @@ const logout = () => {
         :class="`m-t-8px cursor-pointer p-t-8px p-b-8px hover-bg-#45505D ${getMenuItemClass(item)}`"
         @click="setActive(item, index)"
       >
-        <div :class="`i-ic-${item.icon} text-center w-full font-size-26px h-26px`">
-          <i :class="`i-${item.icon}`"></i>
+        <div :class="`text-center w-full font-size-24px h-26px`">
+          <component :is="getIcon(item.icon)" />
         </div>
         <div>{{ item.title }}</div>
       </div>

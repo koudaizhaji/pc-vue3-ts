@@ -2,15 +2,16 @@
  * @Author: 李立
  * @Date: 2023-09-30 23:23:29
  * @LastEditors: 李立
- * @LastEditTime: 2023-10-13 09:23:11
- * @FilePath: \apiObjectf:\pcadmin\src\stores\index.ts
+ * @LastEditTime: 2023-12-03 20:22:12
+ * @FilePath: \apiObjectc:\Users\Farben\Desktop\initobj\project\pc-vue3-ts\src\stores\index.ts
  * @Description: 数据共享的pinia入口
  * 相关开发文件头自动添加：联系微信huaiplayboy
  */
 import { defineStore, createPinia } from 'pinia'
+import type { App } from 'vue'
 // 引入持久化插件
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
-
+import useLoginStore from './login/login'
 export const Store = defineStore({
   // id: 必须的，在所有 Store 中唯一
   id: 'globalState',
@@ -29,4 +30,13 @@ export const Store = defineStore({
 const pinia = createPinia()
 //pinia使用
 pinia.use(piniaPluginPersistedstate)
-export default pinia
+// 封装成了一个函数，把想做的操作在这里直接做了
+function registerStore(app: App<Element>) {
+  // 使用use的pinia
+  app.use(pinia)
+  // 加载本地数据
+  const loginStore = useLoginStore()
+  loginStore.loadLocalDataAction()
+}
+
+export default registerStore

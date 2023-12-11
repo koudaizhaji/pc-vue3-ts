@@ -10,7 +10,7 @@
         <el-input
           placeholder="请输入用户名"
           autoComplete="on"
-          style="position: relative"
+          style="position: relative;"
           v-model="account.username"
           @keyup.enter.native="submitForm(formRef)"
         >
@@ -42,7 +42,7 @@
         </el-input>
       </el-form-item>
 
-      <el-form-item style="width: 100%">
+      <el-form-item style="width: 100%;">
         <el-button :loading="loading" class="login-btn" type="primary" @click="submitForm(formRef)"
           >登录</el-button
         >
@@ -51,14 +51,15 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import type { FormInstance } from 'element-plus'
 import { ElMessage } from 'element-plus'
 // import { useRouter } from 'vue-router'
 // import { useUserStore } from '@/stores/modules/user'
 // import { getTimeStateStr } from '@/utils/index'
 import useLoginStore from '@/stores/login/login'
-import { accountLogin } from '@/services/login/login'
+import { accountLogin, getIpMsg } from '@/services/login/login'
+import router from '@/routers'
 
 // const router = useRouter()
 // const UserStore = useUserStore()
@@ -66,6 +67,8 @@ const formRef = ref<FormInstance>()
 const passwordType = ref('password')
 const loading = ref(false)
 const loginStore = useLoginStore()
+const ip = ref<any>()
+const userAgent = ref<any>()
 
 // step2:输入框验证规则
 const rules = reactive({
@@ -76,7 +79,9 @@ const rules = reactive({
 // 表单数据
 const account = reactive({
   username: '',
-  password: ''
+  password: '',
+  ip: ip,
+  userAgentId: userAgent
 })
 
 // 显示密码图标
@@ -84,6 +89,12 @@ const showPwd = () => {
   passwordType.value = passwordType.value === 'password' ? '' : 'password'
 }
 
+onMounted(async () => {
+  userAgent.value = navigator.userAgent.replace(/[^\w]/gi, '')
+  const ipObj = await getIpMsg()
+  ip.value = ipObj?.ip ? ipObj.ip : ''
+  console.log('拿到的设备信息', userAgent.value, ip.value)
+})
 // const accountRef = ref<InstanceType<typeof PanelAccount>>()
 // 这里使用ref选中的formRef.value也行
 const submitForm = (formEl: FormInstance | undefined) => {
@@ -99,6 +110,8 @@ const submitForm = (formEl: FormInstance | undefined) => {
           if (data.code === 0) {
             // 后续操作交给pinia
             loginStore.setLoginInfo(data)
+            // // 跳转到首页
+            // router.push('/')
           } else if (data.code === 'S1000050') {
             ElMessage({
               type: 'error',

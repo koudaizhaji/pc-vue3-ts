@@ -1,28 +1,20 @@
-/**
- * @Author: 李立
- * @Date: 2023-09-30 23:31:07
- * @LastEditors: 李立
- * @LastEditTime: 2023-10-13 09:19:19
- * @FilePath: \apiObjectf:\pcadmin\src\services\main\main.ts
- * @Description: 主页相关请求封装
- * 相关开发文件头自动添加：联系微信huaiplayboy
- */
 import liliRequest from '../request'
 
+// 获取角色列表
 export function getEntireRoles() {
   return liliRequest.post({
-    url: '/role/list'
+    url: '/pcadmin/role/list'
   })
 }
 
 export function getEntireDepartments() {
   return liliRequest.post({
-    url: '/department/list'
+    url: '/pcadmin/group/list'
   })
 }
 
 export function getEntireMenus() {
   return liliRequest.post({
-    url: '/menu/list'
+    url: '/pcadmin/menu/list'
   })
 }

@@ -2,6 +2,11 @@
 // import { LOGIN_TOKEN } from '@/config'
 import liliRequest from '../index'
 
+export function getIpMsg() {
+  return liliRequest.get({
+    url: 'https://api.ipify.org?format=json'
+  })
+}
 export function accountLogin(account: any) {
   return liliRequest.post({
     url: '/pcadmin/login',
@@ -11,7 +16,7 @@ export function accountLogin(account: any) {
 
 export function getUserById() {
   return liliRequest.get({
-    url: '/pcadmin/user/info'
+    url: '/pcadmin/users/info'
     // headers: {
     //   Authorization: localCache.getCache(LOGIN_TOKEN)
     // }

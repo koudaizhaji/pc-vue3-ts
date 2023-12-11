@@ -3,7 +3,7 @@ import { ElCard, ElTag, type TagProps } from 'element-plus'
 import PublicTable, {
   type PublicTableProps,
   type PublicPaginationProps
-} from '@/components/public-components/public-table/index'
+} from '@/components/public/public-table/index'
 import { h, type VNode } from 'vue'
 
 const publicTableProps: PublicTableProps = {

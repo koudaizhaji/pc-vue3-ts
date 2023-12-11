@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onErrorCaptured } from 'vue'
+import { ref, onErrorCaptured, onMounted, computed } from 'vue'
 import LoginForm from './components/login-account.vue'
 // import SwitchDark from '@/components/switch-dark/index.vue'
 import LoginQrcode from './components/login-qrcode.vue'
@@ -32,6 +32,7 @@ const handleClick = () => {
   console.log('=======', accountLogin)
   accountLogin.value = !accountLogin.value
 }
+
 // 在 setup 函数中的适当位置添加 onErrorCaptured 处理程序
 onErrorCaptured((error) => {
   console.error('Error captured in setup:', error)

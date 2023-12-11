@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ElCard } from 'element-plus'
-import PublicTable, {
-  type PublicTableProps
-} from '@/components/public-components/public-table/index.ts'
+// import PublicTable, {
+//   type PublicTableProps
+// } from '@/components/public/public-table/index.ts'
 
-const publicTableProps: PublicTableProps = {
+// const publicTableProps: PublicTableProps = {
+const publicTableProps = {
   hiddenPagination: true,
   hiddenHeader: true,
   data: [

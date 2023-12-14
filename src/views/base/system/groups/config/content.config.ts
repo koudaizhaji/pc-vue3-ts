@@ -47,8 +47,7 @@ const contentConfig: pageContentTable = {
       type: 'handler',
       label: '操作',
       width: '150',
-      slotName: 'handler',
-      fixed: 'right'
+      slotName: 'handler'
     }
     // {
     //   type: "custom",

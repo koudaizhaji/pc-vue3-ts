@@ -12,11 +12,11 @@
         :border="true"
         height="calc(90%)"
         v-bind="contentConfig.childrenProps"
-        style="width: 92%;"
+        :style="getPageStyle(contentConfig.propsList)"
       >
         <template v-for="item in contentConfig.propsList" :key="item.prop">
           <template v-if="item.type === 'timer'">
-            <el-table-column align="center" :prop="item.prop" v-bind="item">
+            <el-table-column align="center" :prop="item.prop" v-bind="item" sortable>
               <template #default="scope">
                 {{ utcFormat(scope.row[item.prop]) }}
               </template>
@@ -48,12 +48,29 @@
               </template>
             </el-table-column>
           </template>
+          <!-- 父组件进行筛选的操作测试 暂无头绪 -->
+          <!-- <template v-else-if="item.type === 'custom' && item?.filters">
+            <el-table-column
+              align="center"
+              :label="item.label"
+              v-bind="item"
+              :filter-method="filterHandlerFn"
+            >
+              <template #default="scope">
+                <slot :name="item.slotName" v-bind="scope"></slot>
+              </template>
+            </el-table-column>
+          </template> -->
+
           <template v-else-if="item.type === 'custom'">
             <el-table-column align="center" :label="item.label" v-bind="item">
               <template #default="scope">
                 <slot :name="item.slotName" v-bind="scope"></slot>
               </template>
             </el-table-column>
+          </template>
+          <template v-else-if="item.filters">
+            <el-table-column align="center" v-bind="item" :filter-method="pageFilterHandler" />
           </template>
           <template v-else>
             <el-table-column align="center" v-bind="item" />
@@ -81,6 +98,7 @@ import useSystemStore from '@/stores/base/system/system'
 import { utcFormat } from '@/utils/format'
 import { ref, computed } from 'vue'
 import usePermission from '@/hooks/usePermission'
+import type { TableColumnCtx } from 'element-plus'
 
 interface IProps {
   contentConfig: {
@@ -95,7 +113,7 @@ interface IProps {
   }
 }
 const props = defineProps<IProps>()
-const emit = defineEmits(['newClick', 'editClick'])
+const emit = defineEmits(['newClick', 'editClick', 'filterMethod'])
 const isShowFooter = computed(() => props.contentConfig.showFooter ?? true)
 // 0.判断是否有增删改查的权限
 const isCreate = usePermission(props.contentConfig.pageName, 'create')
@@ -107,6 +125,11 @@ console.log('对应的增删改查权限', isCreate, isDelete, isUpdate, isQuery
 // const isDelete = true
 // const isUpdate = true
 // const isQuery = true
+// 检索列表内是否存在fixed:'right'，存在返回width:92%否则返回width:100%
+function getPageStyle(pageList: any[]) {
+  const width = pageList.some((item: any) => item.fixed === 'right') ? '92%' : '100%'
+  return { width }
+}
 
 // 1.请求数据
 const systemStore = useSystemStore()
@@ -166,6 +189,21 @@ function handleDeleteClick(id: number) {
 
 function handleEditClick(data: any) {
   emit('editClick', data)
+}
+// 父组件操作
+async function filterHandlerFn(value: string, row: any, column: TableColumnCtx<any>) {
+  // console.log('点击了表格的某个行', scope)
+  emit('filterMethod', value, row, column)
+  // const property = column['property']
+  // console.log('property', property, row[property], value)
+  // return row[property] === value
+}
+// 当前页面操作
+function pageFilterHandler(value: string, row: any, column: TableColumnCtx<any>) {
+  // console.log('点击了表格的某个行', scope)
+  const property = column['property']
+  console.log('property', property, row[property], value)
+  return row[property] === value
 }
 
 // 暴露函数

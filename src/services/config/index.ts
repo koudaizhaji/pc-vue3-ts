@@ -8,8 +8,8 @@
  * 相关开发文件头自动添加：联系微信huaiplayboy
  */
 // 1.区分开发环境和生产环境
-// export const BASE_URL = 'http://coderwhy.dev:8000'
-// export const BASE_URL = 'http://codercba.prod:8000'
+// export const BASE_URL = 'http://idoapi.dev:8000'
+// export const BASE_URL = 'http://idoapi.prod:8000'
 
 // 2.代码逻辑判断, 判断当前环境
 // vite默认提供的环境变量
@@ -22,10 +22,10 @@ let BASE_URL = ''
 // if(import.meta.env.MODE == 'production')
 if (import.meta.env.PROD) {
   // 生产环境
-  BASE_URL = 'http://koudai.develop.idushenghuo.com/'
+  BASE_URL = 'http://idoapi.develop.idushenghuo.com/'
 } else {
   // 开发环境
-  BASE_URL = 'http://koudai.develop.idushenghuo.com/'
+  BASE_URL = 'http://idoapi.develop.idushenghuo.com/'
 }
 
 console.log('当前环境是', import.meta.env.MODE, BASE_URL)

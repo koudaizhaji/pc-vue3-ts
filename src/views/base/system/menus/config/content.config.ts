@@ -23,7 +23,11 @@ const contentConfig: pageContentTable = {
     {
       prop: 'url',
       label: '菜单url',
-      minWidth: '180'
+      minWidth: '180',
+      filters: [
+        { text: '/base', value: '/base' },
+        { text: '/weixin', value: '/weixin' }
+      ]
     },
     {
       prop: 'icon',
@@ -41,6 +45,11 @@ const contentConfig: pageContentTable = {
       label: '菜单状态',
       minWidth: '80',
       slotName: 'status'
+      // 封装有问题不生效
+      // filters: [
+      //   { text: '启用', value: '1' },
+      //   { text: '禁用', value: '0' }
+      // ]
     },
     {
       prop: 'permission',

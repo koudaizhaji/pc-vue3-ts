@@ -19,6 +19,10 @@ interface tablePropList {
   prop?: string
   fixed?: 'left' | 'right'
   slotName?: string
+  filters?: Array<{
+    text: string
+    value: string | number
+  }>
 }
 
 interface tableChildrenProps {

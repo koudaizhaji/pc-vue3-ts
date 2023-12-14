@@ -92,9 +92,6 @@ const mainMenuLise = computed(() => {
 .cardClass {
   margin-left: -10px;
   margin-right: -10px;
-  max-width: calc(100vw - 200px);
-  // height: calc(100vh - 100px);
-  overflow: auto;
 }
 :deep(.el-card) {
   .el-card__body {

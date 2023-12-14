@@ -4,8 +4,9 @@
   >
     <div class="font-14px p-t-8px">
       <div class="w-40px h-40px logo">
-        <img src="@src-assets/logo.svg" alt="" />
+        <img :src="logoPng" alt="" />
       </div>
+      <!-- 根据菜单状态控制显示隐藏 -->
       <div
         v-for="(item, index) of props.data"
         :key="index"
@@ -99,5 +100,8 @@ const logout = () => {
 <style scoped lang="less">
 .logo {
   margin: 0 auto;
+  img {
+    width: 40px;
+  }
 }
 </style>

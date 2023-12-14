@@ -48,6 +48,13 @@ export default defineConfig({
       symbolId: 'icon-[dir]-[name]'
     })
   ],
+  // 配置前端服务地址和端口
+  server: {
+    host: '0.0.0.0',
+    port: 5173,
+    // 是否开启 https
+    https: false
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),

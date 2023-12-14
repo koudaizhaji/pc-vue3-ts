@@ -50,12 +50,14 @@ const contentTableConfig: pageContentTable = {
     {
       type: 'random',
       prop: 'nickname',
-      label: '微信昵称'
+      label: '微信昵称',
+      width: '120'
     },
     {
       type: 'custom',
       prop: 'user_pic',
-      label: '微信头像'
+      label: '微信头像',
+      width: '120'
     },
     {
       type: 'custom',
@@ -82,8 +84,7 @@ const contentTableConfig: pageContentTable = {
       type: 'handler',
       label: '操作',
       width: '150',
-      slotName: 'handler',
-      fixed: 'right'
+      slotName: 'handler'
     }
   ]
 }

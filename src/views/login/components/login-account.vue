@@ -106,16 +106,17 @@ const submitForm = (formEl: FormInstance | undefined) => {
       console.log('拿到的用户名', account)
       // 1.登录操作
       accountLogin(account)
-        .then((data) => {
-          if (data.code === 0) {
+        .then((res) => {
+          console.log('登录结果', res)
+          if (res.code === 0) {
             // 后续操作交给pinia
-            loginStore.setLoginInfo(data)
+            loginStore.setLoginInfo(res)
             // // 跳转到首页
             // router.push('/')
-          } else if (data.code === 'S1000050') {
+          } else if (res.code != 0) {
             ElMessage({
               type: 'error',
-              message: data.message
+              message: res.message
             })
           }
         })

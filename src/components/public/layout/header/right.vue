@@ -7,10 +7,10 @@
     <el-dropdown class="m-r-8px">
       <div
         class="el-dropdown-link cursor-pointer flex flex-items-center focus-visible-outline-0px"
-        style="color: var(--el-color-primary)"
+        style="color: var(--el-color-primary);"
       >
         {{ username }}
-        <el-icon class="el-icon--right">
+        <el-icon class="el-icon-right">
           <ArrowDown />
         </el-icon>
       </div>
@@ -56,7 +56,8 @@ const logout = () => {
 const clearLocal = async () => {
   // 清除用户菜单，重新获取
   localCache.removeCache(USER_MENUS)
-  await loginStore.getUserMenus()
+  // await loginStore.getUserMenus()
+  await loginStore.formMenuToPermissions()
   ElMessage.success('清除缓存成功')
   setTimeout(() => {
     location.reload()

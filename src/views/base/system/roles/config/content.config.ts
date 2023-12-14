@@ -36,8 +36,7 @@ const contentConfig: pageContentTable = {
       type: 'handler',
       label: '操作',
       width: '180',
-      slotName: 'handler',
-      fixed: 'right'
+      slotName: 'handler'
     }
   ]
 }

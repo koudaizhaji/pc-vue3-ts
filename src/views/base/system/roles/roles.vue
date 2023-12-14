@@ -112,10 +112,10 @@ const treeRef = ref<InstanceType<typeof ElTree>>()
 const handleElTreeCheck = (data1: any, data2: any) => {
   console.log('handleElTreeCheck', data1, data2)
   // 拿到选中的id
-  const muluList = [...data2.checkedKeys, ...data2.halfCheckedKeys]
-  // console.log("这里就是拿到的菜单id数组", muluList)
+  const menuList = [...data2.checkedKeys, ...data2.halfCheckedKeys]
+  // console.log("这里就是拿到的菜单id数组", menuList)
   otherInfo.value = {
-    muluList
+    menuList
   }
 }
 

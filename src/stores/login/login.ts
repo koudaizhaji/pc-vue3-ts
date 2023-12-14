@@ -32,7 +32,7 @@ const useLoginStore = defineStore('login', {
   }),
   actions: {
     async setLoginInfo(data: any) {
-      console.log(data)
+      // console.log(data)
       this.token = data.token
       console.log('拿到的信息', data, data.token, LOGIN_TOKEN)
       // 判断下如果信息不对，提示登录失败
@@ -43,27 +43,8 @@ const useLoginStore = defineStore('login', {
       console.log('拿到的用户信息', userRes)
       localCache.setCache(USER_INFO, this.userInfo)
 
-      // 3.根据角色请求用户权限
-      await this.getUserMenus()
-
-      // 5. 动态添加路由
-      const routes = mapMenusToRoutes(this.userMenus)
-      console.log('routes', routes)
-      routes.forEach((route: any) => {
-        console.log('route', urlMatch(route.path))
-        // 获取根路径名称base,weixin
-        const rootPath = urlMatch(route.path)
-        // 动态添加路由
-        if (rootPath) {
-          router.addRoute(rootPath, route)
-        }
-      })
-
-      // 5.保存权限信息
-      const permissions = mapMenuToPermissions(this.userMenus)
-      this.permissions = permissions
-      console.log('PERMISSIONS', permissions)
-      localCache.setCache(PERMISSIONS, this.permissions)
+      // 从获取菜单，添加动态路由到提取权限
+      await this.formMenuToPermissions()
 
       // 5.获取所有的数据,分组数据，角色数据
       const mainStore = useMainStore()
@@ -80,7 +61,7 @@ const useLoginStore = defineStore('login', {
       const token = localCache.getCache(LOGIN_TOKEN)
       const userInfo = localCache.getCache(USER_INFO)
       const userMenus = localCache.getCache(USER_MENUS)
-      const permissions = localCache.getCache('permissions')
+      const permissions = localCache.getCache(PERMISSIONS)
 
       if (token && userInfo && userMenus) {
         this.token = token
@@ -96,7 +77,7 @@ const useLoginStore = defineStore('login', {
         const routes = mapMenusToRoutes(this.userMenus)
         // console.log('routes', routes)
         routes.forEach((route: any) => {
-          console.log('route111', route)
+          // console.log('route111', route)
           // 动态添加路由
           // 获取根路径名称base,weixin
           const rootPath = urlMatch(route.path)
@@ -107,6 +88,7 @@ const useLoginStore = defineStore('login', {
         })
       }
     },
+    // 获取用户菜单
     async getUserMenus(): Promise<any> {
       const menusRes = await getRoleMenus()
       this.userMenus = menusRes.data
@@ -114,6 +96,36 @@ const useLoginStore = defineStore('login', {
 
       // 4.保存到缓存中
       localCache.setCache(USER_MENUS, this.userMenus)
+    },
+    // 提取权限存储
+    getPermissions(userMenus: any[]): void {
+      const permissions = mapMenuToPermissions(userMenus)
+      this.permissions = permissions
+      console.log('PERMISSIONS', permissions)
+      localCache.setCache(PERMISSIONS, this.permissions)
+    },
+    getAddRoute(userMenus: any[]): void {
+      const routes = mapMenusToRoutes(userMenus)
+      // console.log('routes', routes)
+      routes.forEach((route: any) => {
+        // 获取根路径名称base,weixin
+        const rootPath = urlMatch(route.path)
+        // 动态添加路由
+        if (rootPath) {
+          router.addRoute(rootPath, route)
+        }
+      })
+    },
+    // 用于清除缓存加载数据
+    async formMenuToPermissions() {
+      // 3.根据角色请求用户权限
+      await this.getUserMenus()
+
+      // 5. 动态添加路由
+      this.getAddRoute(this.userMenus)
+
+      // 5.保存权限信息
+      this.getPermissions(this.userMenus)
     }
   }
 })
